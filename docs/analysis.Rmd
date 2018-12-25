@@ -1,0 +1,345 @@
+---
+title: "Analysis"
+author: "Yohan Min"
+date: '2018-05-27'
+output:
+  pdf_document: default
+  html_document:
+    number_sections: yes
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message= F, warning = F)
+```
+
+# Cost-benefit analysis of charger
+
+It is necessary to analyze how much would it benefit from installation of one charger. The benefit could be estimated by the fuel cost reduction as EV uses electricity. Assumping electricity price and gas price keep changing annually and annual discount factor is 6%, the cost - benefit analyses were constructed based on 4 cases. 1) onwer takes the installation cost of 1 charger and uses it, 2) owner takes the installation cost for the whole chargers (5 renters) and uses one of them, 3) owner doesn't live in the building, but pays the cost of all chargers (6 chargers) and get commission of 20% of the benefit generated from the chargers, and 4) with the case 3, there are additional 6 more EVs are using by sharing the 6 installed chargers. Net present value (NPV) and discounted payback period (DPP) are measured for each scenario. 
+
+## Benefits
+
+### Conventional vehicle
+* VMT 10,230 miles
+* MPG 33 miles/ gallon
+* Gas required 310 gallons
+* Gas unit price $2.49/ gallon
+* Total cost $772
+
+### EV
+* Fuel economy 30 kWh/100 mile
+* Elec. need per year 3069 kWh
+* Elec. unit cost $0.077/ kWh
+* Elec. cost $236.3
+
+**Annual benefit for one car $535.7**
+ 
+### Cost 
+* Installation $2,050 (based on Megan's table)
+
+After 100 times Monte Carlo simulations, it shows that case 1 takes less than 6 years to reach the break-even point, while case 2, over 20 years and case 3, about 18 years. This analysis indicates that government supports are necessary to benefit buiding owners for the same impact as the single family households. 
+
+Moreover, MUD charger has potential as one charger could serve muliple EVs. The case 4 shows that it only takes about 10 years to reach the break-even point. Government support could be lessen compared to the case 3. 
+
+```{r }
+
+vmt=10230
+mpg=33
+gas=vmt/mpg
+gas_c=2.49
+c_cost=gas_c*gas
+
+kw=3069
+u_cost=0.077
+e_cost=kw*u_cost
+
+ben=c_cost-e_cost
+
+inst=2050
+
+rt=0.06
+```
+
+
+
+## case1, single owner - single user
+
+```{r}
+npv = c()
+dpp = c()
+
+for(j in 1:100){
+  rgs=gas_c
+  rei=u_cost
+  cf=-inst
+  q=data.frame(matrix(NA,25,6))
+  for(i in 1:25){
+    rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+    rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+    fv=rgs*gas - kw*rei
+    pv= fv/(1+rt)^i
+    old=cf
+    cf=cf+pv
+    dp=ifelse(cf>0,i-1+abs(old/pv),0)
+    q[i,]=c(rgs,rei,fv,pv,cf,dp)
+  }
+  npv[j]=sum(q[,4])-inst #net present value
+  dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+plot(npv)
+plot(dpp)
+colnames(q) = c("Gas price($/gallon)","Elec.price($/kWh)","FV($)","PV($)","NPV($)","DPP(year)")
+q
+mean(npv)
+mean(dpp)
+
+par(mfrow= c(1,1))
+plot(q[,3], main = "Cash flow", ylab="$", xlab="year",
+     type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3,cex.main=0.9)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("bottomright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.9)
+
+par(mfrow= c(1,2))
+plot(q[,1], main = "Gas price", ylab="$/gallon", xlab="year",
+     type = 'l', ylim = c(min(q[,1]),max(q[,1])), col = 'red',lwd=3,cex.main=0.9)
+
+plot(q[,2], main = "Electricity price", ylab="$/kWh", xlab="year",
+     type = 'l', ylim = c(min(q[,2]),max(q[,2])), col = 'red',lwd=3,cex.main=0.9)
+```
+
+
+## case2, one owner - 5 renters 
+
+```{r}
+npv = c()
+dpp = c()
+
+for(j in 1:100){
+  rgs=gas_c
+  rei=u_cost
+  cf=-inst * 6 
+  q=data.frame(matrix(NA,30,6))
+  for(i in 1:30){
+    rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+    rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+    fv=rgs*gas - kw*rei
+    pv= fv/(1+rt)^i
+    old=cf
+    cf=cf+pv
+    dp=ifelse(cf>0,i-1+abs(old/pv),0)
+    q[i,]=c(rgs,rei,fv,pv,cf,dp)
+  }
+  npv[j]=sum(q[,4])-inst #net present value
+  dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+plot(npv)
+plot(dpp)
+colnames(q) = c("Gas price($/gallon)","Elec.price($/kWh)","FV($)","PV($)","NPV($)","DPP(year)")
+q
+mean(npv)
+mean(dpp)
+
+par(mfrow= c(1,1))
+plot(q[,3], main = "Cash flow", ylab="$", xlab="year",
+     type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3,cex.main=0.9)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("bottomright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.9)
+
+par(mfrow= c(1,2))
+plot(q[,1], main = "Gas price", ylab="$/gallon", xlab="year",
+     type = 'l', ylim = c(min(q[,1]),max(q[,1])), col = 'red',lwd=3,cex.main=0.9)
+
+plot(q[,2], main = "Electricity price", ylab="$/kWh", xlab="year",
+     type = 'l', ylim = c(min(q[,2]),max(q[,2])), col = 'red',lwd=3,cex.main=0.9)
+```
+
+
+
+## case3, no onwer but only 6 renters living 
+
+Here it is assumed that the owner doesn't live in the building while collecting a commission of 20% of profit generated from the charger installation. This commission could be interpreted as the increased rental or tax credits if government supports. 
+
+```{r}
+npv = c()
+dpp = c()
+com = 0.2
+
+for(j in 1:100){
+  rgs=gas_c
+  rei=u_cost
+  cf=-inst * 6
+  q=data.frame(matrix(NA,30,6))
+  for(i in 1:30){
+    rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+    rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+    fv=com*6*(rgs*gas - kw*rei)
+    pv= fv/(1+rt)^i
+    old=cf
+    cf=cf+pv
+    dp=ifelse(cf>0,i-1+abs(old/pv),0)
+    q[i,]=c(rgs,rei,fv,pv,cf,dp)
+  }
+  npv[j]=sum(q[,4])-inst #net present value
+  dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+plot(npv)
+plot(dpp)
+colnames(q) = c("Gas price($/gallon)","Elec.price($/kWh)","FV($)","PV($)","NPV($)","DPP(year)")
+q
+mean(npv)
+mean(dpp)
+
+
+par(mfrow= c(1,1))
+plot(q[,3], main = "Cash flow", ylab="$", xlab="year",
+     type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3,cex.main=0.9)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("bottomright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.9)
+
+par(mfrow= c(1,2))
+plot(q[,1], main = "Gas price", ylab="$/gallon", xlab="year",
+     type = 'l', ylim = c(min(q[,1]),max(q[,1])), col = 'red',lwd=3,cex.main=0.9)
+
+plot(q[,2], main = "Electricity price", ylab="$/kWh", xlab="year",
+     type = 'l', ylim = c(min(q[,2]),max(q[,2])), col = 'red',lwd=3,cex.main=0.9)
+
+
+```
+
+## case4, 12 renters (sharing chargers) but rest conditions are the same as case3. 
+
+This case, 2 EV owners are using one charger by sharing it given the same utilization rate as the case3. 
+
+```{r}
+npv = c()
+dpp = c()
+com = 0.2
+
+for(j in 1:100){
+  rgs=gas_c
+  rei=u_cost
+  cf=-inst * 6
+  q=data.frame(matrix(NA,20,6))
+  for(i in 1:20){
+    rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+    rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+    fv=com*12*(rgs*gas - kw*rei)
+    pv= fv/(1+rt)^i
+    old=cf
+    cf=cf+pv
+    dp=ifelse(cf>0,i-1+abs(old/pv),0)
+    q[i,]=c(rgs,rei,fv,pv,cf,dp)
+  }
+  npv[j]=sum(q[,4])-inst #net present value
+  dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+plot(npv)
+plot(dpp)
+colnames(q) = c("Gas price($/gallon)","Elec.price($/kWh)","FV($)","PV($)","NPV($)","DPP(year)")
+q
+mean(npv)
+mean(dpp)
+
+
+par(mfrow= c(1,1))
+plot(q[,3], main = "Cash flow", ylab="$", xlab="year",
+     type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3,cex.main=0.9)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("bottomright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.9)
+
+par(mfrow= c(1,2))
+plot(q[,1], main = "Gas price", ylab="$/gallon", xlab="year",
+     type = 'l', ylim = c(min(q[,1]),max(q[,1])), col = 'red',lwd=3,cex.main=0.9)
+
+plot(q[,2], main = "Electricity price", ylab="$/kWh", xlab="year",
+     type = 'l', ylim = c(min(q[,2]),max(q[,2])), col = 'red',lwd=3,cex.main=0.9)
+
+
+```
+
+
+```{r}
+library(nloptr)
+c = 2050 #cost for one charger
+m = 100*c #capacity
+n = 11 #number of places for demand
+npv = c(11741.5,1601) # (-5000,1500) #single,
+c1 = c(0.3,0.7)
+c2 = c(0.1,0.9)
+cc1= t(c1)%*%npv
+cc2= t(c2)%*%npv
+b = c(rep(cc1,3),rep(cc2,8)) #benefit per cluster
+pop=c(0.049,0.095,0.112,0.099,0.067,0.128,0.062,0.076,0.053,0.154,0.105) #population weight
+bp=pop*b #total benefit
+
+names(pop) = c("cA_1","cA_2","cA_3","cB_1","cB_2","cB_3","cB_4","cB_5","cB_6","cB_7","cB_8")
+barplot(pop, col = "orange", main = "Population proportion in MUD blocks", 
+        xlab="MUDs", ylab="Relative portion of population",cex.names = 0.7)
+
+
+
+# Objective function EQUITY
+alpha = 1 # fair
+eval.f <- function(x) {return(-sum(b*log(x)))} #max
+
+# Constraint function
+# to be of the form g(x) <= 0
+eval.g <- function(x) {
+  return(sum(c*x) - m)
+}
+
+x0 <- rep(9,11)
+
+opts <- list('algorithm' = 'NLOPT_GN_ISRES', 'xtol_rel' = 1.0e-8, 'maxeval' = 100000)
+
+eq = nloptr(
+  x0 = x0,
+  eval_f = eval.f,
+  lb = rep(0,11),
+  ub = rep(100,11),
+  eval_g_eq = eval.g,
+  opts = opts
+)
+
+par(mfrow=c(1,2))
+bar1 = eq$solution
+names(bar1) = c("cA_1","cA_2","cA_3","cB_1","cB_2","cB_3","cB_4","cB_5","cB_6","cB_7","cB_8")
+barplot(bar1, col = "blue", main = "Equity oriented policy", 
+        xlab="MUDs", ylim = c(0,80),ylab="number of chargers",cex.names = 0.7)
+
+
+# Objective function Efficiency
+alpha = 0 
+eval.f <- function(x) {return (-sum(b*x^(1-alpha)/(1-alpha)))} #max
+
+
+
+# Constraint function
+# to be of the form g(x) <= 0
+eval.g <- function(x) {
+  return(sum(c*x) - m)
+}
+
+x0 <- rep(9,11)
+
+opts <- list('algorithm' = 'NLOPT_GN_ISRES', 'xtol_rel' = 1.0e-8, 'maxeval' = 100000)
+
+ef = nloptr(
+  x0 = x0,
+  eval_f = eval.f,
+  lb = rep(0,11),
+  ub = rep(100,11),
+  eval_g_eq = eval.g,
+  opts = opts
+)
+
+bar = ef$solution
+names(bar) = c("cA_1","cA_2","cA_3","cB_1","cB_2","cB_3","cB_4","cB_5","cB_6","cB_7","cB_8")
+barplot(bar, col = "red", main = "Efficiency oriented policy", 
+        xlab="MUDs", ylim = c(0,80), ylab="number of chargers",cex.names = 0.7)
+```
+
