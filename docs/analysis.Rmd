@@ -3,9 +3,10 @@ title: "Analysis"
 author: "Yohan Min"
 date: '2018-05-27'
 output:
-  pdf_document: default
   html_document:
     number_sections: yes
+    keep_md: true
+  pdf_document: default
   word_document: default
 ---
 

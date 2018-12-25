@@ -3,11 +3,13 @@ title: "EV charger"
 author: "Yohan"
 date: "May-06-2018"
 output:
-    pdf_document:
-    fig_caption: yes
-    number_sections: yes
-    toc: yes
-
+  html_document:
+    df_print: paged
+    keep_md: true
+  fig_caption: yes
+  number_sections: yes
+  pdf_document: null
+  toc: yes
 ---
 
 ```{r setup, include=FALSE}
