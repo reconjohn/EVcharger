@@ -13,7 +13,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = F,fig.pos="H")
+knitr::opts_chunk$set(echo = T,fig.pos="H")
 ```
 
 # GIS social characteristics of Tacoma
@@ -203,7 +203,10 @@ hetero = data.frame(da[c(6,120,545),])
 
 par(mfrow=c(3,3))
 for(i in 1:14) boxplot(mud[[i]], hetero[[i]], ylab= colnames(mud)[i], xlab="cluster 1, cluster 2")
+```
 
+
+```{r}
 summary(mud)
 summary(hetero)
 ```

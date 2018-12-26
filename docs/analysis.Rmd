@@ -11,7 +11,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = F, message= F, warning = F)
+knitr::opts_chunk$set(echo = T, message= F, warning = F)
 ```
 
 # Cost-benefit analysis of charger

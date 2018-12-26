@@ -70,14 +70,69 @@ A few blocks were chosen based on multi-family housings occupying the main area 
 
 
 
+```r
+dat<-read.csv("../data/raw/dat - Copy1.csv")
+data= data.frame(matrix(NA,560,16))
+data[,1]=dat[,2]
+data[,2]=dat[,3]
+data[,3]=dat[,6]
+data[,4]=dat[,7]/dat[,5]
+data[,5]=dat[,9]/dat[,5]
+data[,6]=dat[,11]/dat[,5]
+data[,7]=dat[,16]/dat[,14]
+data[,8]=dat[,17]/dat[,14]
+data[,9]=dat[,21]/dat[,18]
+data[,10]=dat[,26]/dat[,14]
+data[,11]=dat[,27]
+data[,12]=dat[,32]/dat[,14]
+data[,13]=dat[,36]/dat[,14]
+data[,14]=dat[,38]
+data[,15]=dat[,44]/dat[,42]
+data[,16]=dat[,50]/dat[,49]
+data[is.na(data)]=0
+colnames(data)=c("Geoid","select","pop.density","male","age35_64","white","nonfamily","renter","master","over100,000","med.income","over20units","buitbf2000","rantpctincome","45min.commute","no.vechicle.renter")
+# str(data)
+```
+
+
+```r
+pairs(data[-c(1,2)])
+```
 
 ![Independant variable plots](EV_files/figure-html/Fig1-1.png)
+
+```r
+library(corrplot)
+```
 
 ```
 ## corrplot 0.84 loaded
 ```
 
+```r
+library(MASS)
+```
+
+
+```r
+corrplot.mixed(cor(data[-c(1,2)]),upper="ellipse")
+```
+
 ![Correlations of indipendeant variables](EV_files/figure-html/Fig2-1.png)
+
+
+```r
+M1 <- glm(as.factor(select)~ . -Geoid,data, family=binomial())
+# stepAIC(M1)
+M2 <- glm(formula = as.factor(select) ~ pop.density + nonfamily + renter + no.vechicle.renter, family = binomial(), data = data)
+s=summary(M2)
+
+library(kableExtra)
+kable(coef(s), format = "latex", caption = "Binomial logistic model [note]", booktabs = T) %>%
+  kable_styling(latex_options = c("hold_position")) %>%
+  kable_styling(latex_options = c("striped", "scale_down"))%>%
+  add_footnote(c("AIC is 95.92"), notation = "symbol")
+```
 
 \rowcolors{2}{gray!6}{white}
 \begin{table}[!h]
@@ -105,6 +160,21 @@ no.vechicle.renter & 4.3534712 & 1.8372864 & 2.369512 & 0.0178116\\
 It is estimated that more population density, more portion of rent housing with higher portion of no vehicle households, and less portion of non family households or more portion of family households are more likely correlated with blocks with more multi-family households.
 
 Other regression model was built excluding the 3 erratic bock groups as below.
+
+
+```r
+data1 = data[-c(6,120,545),]
+M1 <- glm(as.factor(select)~ . -Geoid,data1, family=binomial())
+# stepAIC(M1)
+M2 <- glm(formula = as.factor(select) ~ pop.density + renter, family = binomial(), data = data1)
+s=summary(M2)
+
+library(kableExtra)
+kable(coef(s), format = "latex", caption = "Binomial logistic model [note]", booktabs = T) %>%
+  kable_styling(latex_options = c("hold_position")) %>%
+  kable_styling(latex_options = c("striped", "scale_down"))%>%
+  add_footnote(c("AIC is 72.75"), notation = "symbol")
+```
 
 \rowcolors{2}{gray!6}{white}
 \begin{table}[!h]
@@ -135,43 +205,142 @@ Population density and portion of rent households are the main factor for MUD ch
 To verify the characteristics of those blocks chosen above, factor and cluster analysis was performed. Two factors were chosen and the first factor (PA1) is related to the variables: "non-family households", "buiding units over 20", "rent households","population density","rent households with no vehicle","housings built before 2000 year" and the rest of variables are in the 2nd factor (PA2).
 
 
+
+```r
+library(psych)
+library (cluster)
+library(reshape)
+library(ggplot2)
+library(som)
+library(GPArotation)
+
+da = data[,-c(1,2)]
+da = data.matrix(da)
+
+fa.parallel(da,fa="both",n.iter=100)
+```
+
 ![](EV_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 ```
 ## Parallel analysis suggests that the number of factors =  5  and the number of components =  3
 ```
 
-![](EV_files/figure-html/unnamed-chunk-4-2.png)<!-- -->![](EV_files/figure-html/unnamed-chunk-4-3.png)<!-- -->
+```r
+fa <- fa(da,nfactors=2,rotate="promax",fm="pa")
+dat1 <- fa$scores
+factor.plot(fa, labels=rownames(fa$loadings))
+```
+
+![](EV_files/figure-html/unnamed-chunk-4-2.png)<!-- -->
+
+```r
+fa.diagram(fa,simple=F)
+```
+
+![](EV_files/figure-html/unnamed-chunk-4-3.png)<!-- -->
+
+```r
+# dim(da)
+
+kmeans<-kmeans(dat1,center=2)
+# kmeans
+# summary(kmeans) # slots in kmeans object
+
+set.seed(5099)
+sum(kmeans(dat1,center=1)$withinss)
+```
 
 ```
 ## [1] 969.1251
 ```
 
+```r
+wss <- (nrow(dat1)-1)*sum(apply(dat1,2,var))
+for (i in 2:9) wss[i] <- sum(kmeans(dat1,centers=i)$withinss)
+plot(1:9, wss, type="b", xlab="Number of Clusters",ylab="Within groups sum of squares")
+```
+
 ![](EV_files/figure-html/unnamed-chunk-4-4.png)<!-- -->
+
+```r
+kmeans$centers # centroids of clusters
+```
 
 ```
 ##          PA1        PA2
-## 1  0.7528367 -0.8084157
-## 2 -0.5523910  0.5931719
+## 1 -0.5523910  0.5931719
+## 2  0.7528367 -0.8084157
+```
+
+```r
+#number of samples in each cluster
+table(kmeans$cluster)
 ```
 
 ```
 ## 
 ##   1   2 
-## 237 323
+## 323 237
+```
+
+```r
+kmeans$centers
 ```
 
 ```
 ##          PA1        PA2
-## 1  0.7528367 -0.8084157
-## 2 -0.5523910  0.5931719
+## 1 -0.5523910  0.5931719
+## 2  0.7528367 -0.8084157
 ```
 
-![](EV_files/figure-html/unnamed-chunk-4-5.png)<!-- -->![](EV_files/figure-html/unnamed-chunk-4-6.png)<!-- -->![](EV_files/figure-html/unnamed-chunk-4-7.png)<!-- -->
+```r
+Group1<-kmeans$centers[1,]
+Group2<-kmeans$centers[2,]
+plot(Group1,Group2,type="n")
+text(Group1,Group2, labels=colnames(dat))
+```
+
+![](EV_files/figure-html/unnamed-chunk-4-5.png)<!-- -->
+
+```r
+pairs(dat1, col=kmeans$cluster)
+```
+
+![](EV_files/figure-html/unnamed-chunk-4-6.png)<!-- -->
+
+```r
+clusplot(dat1, kmeans$cluster, color=TRUE,shade=TRUE, labels=5, lines=0)
+```
+
+![](EV_files/figure-html/unnamed-chunk-4-7.png)<!-- -->
+
+```r
+# library(rgl)
+# plot3d(fa$scores, col = kmeans$cluster)
+```
 
 It is found the clusters are decided by the first factor (PA1). The first clustered group is more related to the higher value of PA1. Among the 11 chosen block groups with MUD, 3 block groups are clustered into the cluster 2nd group. We tried to go further analysis the difference between the 1st and the 2nd clustered group of the block groups chosen.
 
-![](EV_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+
+```r
+GEOID_MUD = data[c(6,40,42,51,73,88,120,146,301,391,545),1]
+GEOID_hetero = data[c(6,120,545), 1]
+
+mud = data.frame(da[c(40,42,51,73,88,146,301,391),])
+hetero = data.frame(da[c(6,120,545),])
+
+par(mfrow=c(3,3))
+for(i in 1:14) boxplot(mud[[i]], hetero[[i]], ylab= colnames(mud)[i], xlab="cluster 1, cluster 2")
+```
+
+![](EV_files/figure-html/unnamed-chunk-5-1.png)<!-- -->![](EV_files/figure-html/unnamed-chunk-5-2.png)<!-- -->
+
+
+
+```r
+summary(mud)
+```
 
 ```
 ##   pop.density         male           age35_64          white       
@@ -204,6 +373,10 @@ It is found the clusters are decided by the first factor (PA1). The first cluste
 ##  Max.   :0.31761   Max.   :0.39344
 ```
 
+```r
+summary(hetero)
+```
+
 ```
 ##   pop.density         male           age35_64          white       
 ##  Min.   : 3221   Min.   :0.4653   Min.   :0.2788   Min.   :0.1667  
@@ -234,8 +407,6 @@ It is found the clusters are decided by the first factor (PA1). The first cluste
 ##  3rd Qu.:0.18171   3rd Qu.:0.30514   
 ##  Max.   :0.21199   Max.   :0.31398
 ```
-
-![](EV_files/figure-html/unnamed-chunk-5-2.png)<!-- -->
 
 It is also found the 2nd clustered group which has the lower value of PA1 has the noticeable characteristics with lower population density, lower non-family households, higher median income, lower unit in a building, etc.
 
