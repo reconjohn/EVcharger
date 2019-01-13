@@ -1,7 +1,7 @@
 ---
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 # EV charger investment in Tacoma
 * Cost-Benefit Analysis - Investor view
@@ -132,28 +132,61 @@ kable(coef(s), caption = "Binomial logistic model [note]", booktabs = T) %>%
   add_footnote(c("AIC is 95.92"), notation = "symbol")
 ```
 
-\rowcolors{2}{gray!6}{white}
-\begin{table}[!h]
 
-\caption{\label{tab:unnamed-chunk-2}Binomial logistic model \textsuperscript{*}}
-\centering
-\resizebox{\linewidth}{!}{
-\begin{tabular}[t]{lrrrr}
-\hiderowcolors
-\toprule
-  & Estimate & Std. Error & z value & Pr(>|z|)\\
-\midrule
-\showrowcolors
-(Intercept) & -5.8072650 & 0.9263109 & -6.269240 & 0.0000000\\
-pop.density & 0.0001583 & 0.0000768 & 2.061436 & 0.0392615\\
-nonfamily & -3.6263804 & 2.0501884 & -1.768803 & 0.0769267\\
-renter & 3.3332370 & 1.2661521 & 2.632572 & 0.0084741\\
-no.vechicle.renter & 4.3534712 & 1.8372864 & 2.369512 & 0.0178116\\
-\bottomrule
-\multicolumn{5}{l}{\textsuperscript{*} AIC is 95.92}\\
-\end{tabular}}
-\end{table}
-\rowcolors{2}{white}{white}
+<table class="table table" style="margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<caption>Binomial logistic model <sup>*</sup></caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Std. Error </th>
+   <th style="text-align:right;"> z value </th>
+   <th style="text-align:right;"> Pr(&gt;|z|) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> -5.8072650 </td>
+   <td style="text-align:right;"> 0.9263109 </td>
+   <td style="text-align:right;"> -6.269240 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> pop.density </td>
+   <td style="text-align:right;"> 0.0001583 </td>
+   <td style="text-align:right;"> 0.0000768 </td>
+   <td style="text-align:right;"> 2.061436 </td>
+   <td style="text-align:right;"> 0.0392615 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> nonfamily </td>
+   <td style="text-align:right;"> -3.6263804 </td>
+   <td style="text-align:right;"> 2.0501884 </td>
+   <td style="text-align:right;"> -1.768803 </td>
+   <td style="text-align:right;"> 0.0769267 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> renter </td>
+   <td style="text-align:right;"> 3.3332370 </td>
+   <td style="text-align:right;"> 1.2661521 </td>
+   <td style="text-align:right;"> 2.632572 </td>
+   <td style="text-align:right;"> 0.0084741 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> no.vechicle.renter </td>
+   <td style="text-align:right;"> 4.3534712 </td>
+   <td style="text-align:right;"> 1.8372864 </td>
+   <td style="text-align:right;"> 2.369512 </td>
+   <td style="text-align:right;"> 0.0178116 </td>
+  </tr>
+</tbody>
+<tfoot>
+<tr>
+<td style = 'padding: 0; border:0;' colspan='100%'><sup>*</sup> AIC is 95.92</td>
+</tr>
+</tfoot>
+</table>
 
 It is estimated that more population density, more portion of rent housing with higher portion of no vehicle households, and less portion of non family households or more portion of family households are more likely correlated with blocks with more multi-family households.
 
@@ -174,26 +207,46 @@ kable(coef(s), caption = "Binomial logistic model [note]", booktabs = T) %>%
   add_footnote(c("AIC is 72.75"), notation = "symbol")
 ```
 
-\rowcolors{2}{gray!6}{white}
-\begin{table}[!h]
-
-\caption{\label{tab:unnamed-chunk-3}Binomial logistic model \textsuperscript{*}}
-\centering
-\resizebox{\linewidth}{!}{
-\begin{tabular}[t]{lrrrr}
-\hiderowcolors
-\toprule
-  & Estimate & Std. Error & z value & Pr(>|z|)\\
-\midrule
-\showrowcolors
-(Intercept) & -7.0291502 & 1.0766785 & -6.528551 & 0.0000000\\
-pop.density & 0.0001444 & 0.0000783 & 1.844661 & 0.0650868\\
-renter & 3.7222820 & 1.5444505 & 2.410101 & 0.0159481\\
-\bottomrule
-\multicolumn{5}{l}{\textsuperscript{*} AIC is 72.75}\\
-\end{tabular}}
-\end{table}
-\rowcolors{2}{white}{white}
+<table class="table table" style="margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<caption>Binomial logistic model <sup>*</sup></caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Std. Error </th>
+   <th style="text-align:right;"> z value </th>
+   <th style="text-align:right;"> Pr(&gt;|z|) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> -7.0291502 </td>
+   <td style="text-align:right;"> 1.0766785 </td>
+   <td style="text-align:right;"> -6.528551 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> pop.density </td>
+   <td style="text-align:right;"> 0.0001444 </td>
+   <td style="text-align:right;"> 0.0000783 </td>
+   <td style="text-align:right;"> 1.844661 </td>
+   <td style="text-align:right;"> 0.0650868 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> renter </td>
+   <td style="text-align:right;"> 3.7222820 </td>
+   <td style="text-align:right;"> 1.5444505 </td>
+   <td style="text-align:right;"> 2.410101 </td>
+   <td style="text-align:right;"> 0.0159481 </td>
+  </tr>
+</tbody>
+<tfoot>
+<tr>
+<td style = 'padding: 0; border:0;' colspan='100%'><sup>*</sup> AIC is 72.75</td>
+</tr>
+</tfoot>
+</table>
 
 Population density and portion of rent households are the main factor for MUD characteristics in Tacoma.
 

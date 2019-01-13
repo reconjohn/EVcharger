@@ -1,0 +1,694 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={EV charger},
+            pdfauthor={Yohan},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{EV charger}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Yohan}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{May-06-2018}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+
+\begin{document}
+\maketitle
+
+\section{GIS social characteristics of
+Tacoma}\label{gis-social-characteristics-of-tacoma}
+
+It is known that EV onwers are more educated with higher income. Ye
+(2017) confirms, ``Among the 15,408 survey respondents who specified
+their income, 77\% had an annual household income of over \$100,000.
+Among the 18,848 respondents who specified their education level, 34\%
+of them obtained a Bachelor's degree and 49\% of them obtained a
+Graduate degree. Similarly, 81\% of the respondents live in a
+single-family house; 75\% of them are male, and 64\% of them are white.
+According to this survey, EV owners are more likely to be male with
+relatively high income, possess a higher level of education attainment,
+and live in single family homes.''
+
+It is necessary in this regard to figure out the social characteristics
+of Tacoma for EV charger consideration. Hear are several maps showing
+them.
+
+\begin{figure}
+\centering
+\includegraphics{./figs/map02.jpg}
+\caption{City of Tacoma with MUD}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{./figs/pop.jpg}
+\caption{Population}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{./figs/Rent.jpg}
+\caption{Rent household}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{./figs/Nonfamily.jpg}
+\caption{Nonfamily household}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{./figs/commute.jpg}
+\caption{Commuters}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{./figs/built.jpg}
+\caption{Housing built before 2000}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{./figs/income.jpg}
+\caption{Median household incomes}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{./figs/education.jpg}
+\caption{Education}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{./figs/age.jpg}
+\caption{Population age}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{./figs/race.jpg}
+\caption{White race}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{./figs/novehicle.jpg}
+\caption{Rent households with No vehicle}
+\end{figure}
+
+\section{Blocks with multi-family housings crossing the main
+area}\label{blocks-with-multi-family-housings-crossing-the-main-area}
+
+A few blocks were chosen based on multi-family housings occupying the
+main area of the blocks. These blocks will be investigated against the
+rest of blocks to see any differences in terms of social
+characteristics.
+
+14 variables (portion)
+
+\begin{itemize}
+\tightlist
+\item
+  Population density
+\item
+  Male
+\item
+  Age 35 to 64
+\item
+  Non family household
+\item
+  Education (Over bachelor)
+\item
+  Rent household
+\item
+  Median income
+\item
+  Household income over \$100,000
+\item
+  Housing built before 2000
+\item
+  Commuter more than 45 min to work
+\item
+  Rent households with no vehicle
+\item
+  Rent \% income
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics[height=8.33333in]{./figs/selection.jpg}
+\caption{Selection of blocks}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat<-}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"../data/raw/dat - Copy1.csv"}\NormalTok{)}
+\NormalTok{data=}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{,}\DecValTok{560}\NormalTok{,}\DecValTok{16}\NormalTok{))}
+\NormalTok{data[,}\DecValTok{1}\NormalTok{]=dat[,}\DecValTok{2}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{2}\NormalTok{]=dat[,}\DecValTok{3}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{3}\NormalTok{]=dat[,}\DecValTok{6}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{4}\NormalTok{]=dat[,}\DecValTok{7}\NormalTok{]}\OperatorTok{/}\NormalTok{dat[,}\DecValTok{5}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{5}\NormalTok{]=dat[,}\DecValTok{9}\NormalTok{]}\OperatorTok{/}\NormalTok{dat[,}\DecValTok{5}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{6}\NormalTok{]=dat[,}\DecValTok{11}\NormalTok{]}\OperatorTok{/}\NormalTok{dat[,}\DecValTok{5}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{7}\NormalTok{]=dat[,}\DecValTok{16}\NormalTok{]}\OperatorTok{/}\NormalTok{dat[,}\DecValTok{14}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{8}\NormalTok{]=dat[,}\DecValTok{17}\NormalTok{]}\OperatorTok{/}\NormalTok{dat[,}\DecValTok{14}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{9}\NormalTok{]=dat[,}\DecValTok{21}\NormalTok{]}\OperatorTok{/}\NormalTok{dat[,}\DecValTok{18}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{10}\NormalTok{]=dat[,}\DecValTok{26}\NormalTok{]}\OperatorTok{/}\NormalTok{dat[,}\DecValTok{14}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{11}\NormalTok{]=dat[,}\DecValTok{27}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{12}\NormalTok{]=dat[,}\DecValTok{32}\NormalTok{]}\OperatorTok{/}\NormalTok{dat[,}\DecValTok{14}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{13}\NormalTok{]=dat[,}\DecValTok{36}\NormalTok{]}\OperatorTok{/}\NormalTok{dat[,}\DecValTok{14}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{14}\NormalTok{]=dat[,}\DecValTok{38}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{15}\NormalTok{]=dat[,}\DecValTok{44}\NormalTok{]}\OperatorTok{/}\NormalTok{dat[,}\DecValTok{42}\NormalTok{]}
+\NormalTok{data[,}\DecValTok{16}\NormalTok{]=dat[,}\DecValTok{50}\NormalTok{]}\OperatorTok{/}\NormalTok{dat[,}\DecValTok{49}\NormalTok{]}
+\NormalTok{data[}\KeywordTok{is.na}\NormalTok{(data)]=}\DecValTok{0}
+\KeywordTok{colnames}\NormalTok{(data)=}\KeywordTok{c}\NormalTok{(}\StringTok{"Geoid"}\NormalTok{,}\StringTok{"select"}\NormalTok{,}\StringTok{"pop.density"}\NormalTok{,}\StringTok{"male"}\NormalTok{,}\StringTok{"age35_64"}\NormalTok{,}\StringTok{"white"}\NormalTok{,}\StringTok{"nonfamily"}\NormalTok{,}\StringTok{"renter"}\NormalTok{,}\StringTok{"master"}\NormalTok{,}\StringTok{"over100,000"}\NormalTok{,}\StringTok{"med.income"}\NormalTok{,}\StringTok{"over20units"}\NormalTok{,}\StringTok{"buitbf2000"}\NormalTok{,}\StringTok{"rantpctincome"}\NormalTok{,}\StringTok{"45min.commute"}\NormalTok{,}\StringTok{"no.vechicle.renter"}\NormalTok{)}
+\CommentTok{# str(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pairs}\NormalTok{(data[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{EV_files/figure-latex/Fig1-1.pdf}
+\caption{Independant variable plots}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(corrplot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## corrplot 0.84 loaded
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(MASS)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{corrplot.mixed}\NormalTok{(}\KeywordTok{cor}\NormalTok{(data[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)]),}\DataTypeTok{upper=}\StringTok{"ellipse"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{EV_files/figure-latex/Fig2-1.pdf}
+\caption{Correlations of indipendeant variables}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M1 <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(}\KeywordTok{as.factor}\NormalTok{(select)}\OperatorTok{~}\StringTok{ }\NormalTok{. }\OperatorTok{-}\NormalTok{Geoid,data, }\DataTypeTok{family=}\KeywordTok{binomial}\NormalTok{())}
+\CommentTok{# stepAIC(M1)}
+\NormalTok{M2 <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(}\DataTypeTok{formula =} \KeywordTok{as.factor}\NormalTok{(select) }\OperatorTok{~}\StringTok{ }\NormalTok{pop.density }\OperatorTok{+}\StringTok{ }\NormalTok{nonfamily }\OperatorTok{+}\StringTok{ }\NormalTok{renter }\OperatorTok{+}\StringTok{ }\NormalTok{no.vechicle.renter, }\DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(), }\DataTypeTok{data =}\NormalTok{ data)}
+\NormalTok{s=}\KeywordTok{summary}\NormalTok{(M2)}
+
+\KeywordTok{library}\NormalTok{(kableExtra)}
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{coef}\NormalTok{(s), }\DataTypeTok{caption =} \StringTok{"Binomial logistic model [note]"}\NormalTok{, }\DataTypeTok{booktabs =}\NormalTok{ T) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{latex_options =} \KeywordTok{c}\NormalTok{(}\StringTok{"hold_position"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{latex_options =} \KeywordTok{c}\NormalTok{(}\StringTok{"striped"}\NormalTok{, }\StringTok{"scale_down"}\NormalTok{))}\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{add_footnote}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"AIC is 95.92"}\NormalTok{), }\DataTypeTok{notation =} \StringTok{"symbol"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\rowcolors{2}{gray!6}{white}
+
+\begin{table}[!h]
+
+\caption{\label{tab:unnamed-chunk-2}Binomial logistic model \textsuperscript{*}}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{lrrrr}
+\hiderowcolors
+\toprule
+  & Estimate & Std. Error & z value & Pr(>|z|)\\
+\midrule
+\showrowcolors
+(Intercept) & -5.8072650 & 0.9263109 & -6.269240 & 0.0000000\\
+pop.density & 0.0001583 & 0.0000768 & 2.061436 & 0.0392615\\
+nonfamily & -3.6263804 & 2.0501884 & -1.768803 & 0.0769267\\
+renter & 3.3332370 & 1.2661521 & 2.632572 & 0.0084741\\
+no.vechicle.renter & 4.3534712 & 1.8372864 & 2.369512 & 0.0178116\\
+\bottomrule
+\multicolumn{5}{l}{\textsuperscript{*} AIC is 95.92}\\
+\end{tabular}}
+\end{table}
+
+\rowcolors{2}{white}{white}
+
+It is estimated that more population density, more portion of rent
+housing with higher portion of no vehicle households, and less portion
+of non family households or more portion of family households are more
+likely correlated with blocks with more multi-family households.
+
+Other regression model was built excluding the 3 erratic bock groups as
+below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data1 =}\StringTok{ }\NormalTok{data[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{6}\NormalTok{,}\DecValTok{120}\NormalTok{,}\DecValTok{545}\NormalTok{),]}
+\NormalTok{M1 <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(}\KeywordTok{as.factor}\NormalTok{(select)}\OperatorTok{~}\StringTok{ }\NormalTok{. }\OperatorTok{-}\NormalTok{Geoid,data1, }\DataTypeTok{family=}\KeywordTok{binomial}\NormalTok{())}
+\CommentTok{# stepAIC(M1)}
+\NormalTok{M2 <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(}\DataTypeTok{formula =} \KeywordTok{as.factor}\NormalTok{(select) }\OperatorTok{~}\StringTok{ }\NormalTok{pop.density }\OperatorTok{+}\StringTok{ }\NormalTok{renter, }\DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(), }\DataTypeTok{data =}\NormalTok{ data1)}
+\NormalTok{s=}\KeywordTok{summary}\NormalTok{(M2)}
+
+\KeywordTok{library}\NormalTok{(kableExtra)}
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{coef}\NormalTok{(s), }\DataTypeTok{caption =} \StringTok{"Binomial logistic model [note]"}\NormalTok{, }\DataTypeTok{booktabs =}\NormalTok{ T) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{latex_options =} \KeywordTok{c}\NormalTok{(}\StringTok{"hold_position"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{latex_options =} \KeywordTok{c}\NormalTok{(}\StringTok{"striped"}\NormalTok{, }\StringTok{"scale_down"}\NormalTok{))}\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{add_footnote}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"AIC is 72.75"}\NormalTok{), }\DataTypeTok{notation =} \StringTok{"symbol"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\rowcolors{2}{gray!6}{white}
+
+\begin{table}[!h]
+
+\caption{\label{tab:unnamed-chunk-3}Binomial logistic model \textsuperscript{*}}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{lrrrr}
+\hiderowcolors
+\toprule
+  & Estimate & Std. Error & z value & Pr(>|z|)\\
+\midrule
+\showrowcolors
+(Intercept) & -7.0291502 & 1.0766785 & -6.528551 & 0.0000000\\
+pop.density & 0.0001444 & 0.0000783 & 1.844661 & 0.0650868\\
+renter & 3.7222820 & 1.5444505 & 2.410101 & 0.0159481\\
+\bottomrule
+\multicolumn{5}{l}{\textsuperscript{*} AIC is 72.75}\\
+\end{tabular}}
+\end{table}
+
+\rowcolors{2}{white}{white}
+
+Population density and portion of rent households are the main factor
+for MUD characteristics in Tacoma.
+
+\section{Factor and cluster analysis}\label{factor-and-cluster-analysis}
+
+To verify the characteristics of those blocks chosen above, factor and
+cluster analysis was performed. Two factors were chosen and the first
+factor (PA1) is related to the variables: ``non-family households'',
+``buiding units over 20'', ``rent households'',``population
+density'',``rent households with no vehicle'',``housings built before
+2000 year'' and the rest of variables are in the 2nd factor (PA2).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(psych)}
+\KeywordTok{library}\NormalTok{ (cluster)}
+\KeywordTok{library}\NormalTok{(reshape)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(som)}
+\KeywordTok{library}\NormalTok{(GPArotation)}
+
+\NormalTok{da =}\StringTok{ }\NormalTok{data[,}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)]}
+\NormalTok{da =}\StringTok{ }\KeywordTok{data.matrix}\NormalTok{(da)}
+
+\KeywordTok{fa.parallel}\NormalTok{(da,}\DataTypeTok{fa=}\StringTok{"both"}\NormalTok{,}\DataTypeTok{n.iter=}\DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EV_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{verbatim}
+## Parallel analysis suggests that the number of factors =  5  and the number of components =  3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fa <-}\StringTok{ }\KeywordTok{fa}\NormalTok{(da,}\DataTypeTok{nfactors=}\DecValTok{2}\NormalTok{,}\DataTypeTok{rotate=}\StringTok{"promax"}\NormalTok{,}\DataTypeTok{fm=}\StringTok{"pa"}\NormalTok{)}
+\NormalTok{dat1 <-}\StringTok{ }\NormalTok{fa}\OperatorTok{$}\NormalTok{scores}
+\KeywordTok{factor.plot}\NormalTok{(fa, }\DataTypeTok{labels=}\KeywordTok{rownames}\NormalTok{(fa}\OperatorTok{$}\NormalTok{loadings))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EV_files/figure-latex/unnamed-chunk-4-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{fa.diagram}\NormalTok{(fa,}\DataTypeTok{simple=}\NormalTok{F)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EV_files/figure-latex/unnamed-chunk-4-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# dim(da)}
+
+\NormalTok{kmeans<-}\KeywordTok{kmeans}\NormalTok{(dat1,}\DataTypeTok{center=}\DecValTok{2}\NormalTok{)}
+\CommentTok{# kmeans}
+\CommentTok{# summary(kmeans) # slots in kmeans object}
+
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{5099}\NormalTok{)}
+\KeywordTok{sum}\NormalTok{(}\KeywordTok{kmeans}\NormalTok{(dat1,}\DataTypeTok{center=}\DecValTok{1}\NormalTok{)}\OperatorTok{$}\NormalTok{withinss)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 969.1251
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wss <-}\StringTok{ }\NormalTok{(}\KeywordTok{nrow}\NormalTok{(dat1)}\OperatorTok{-}\DecValTok{1}\NormalTok{)}\OperatorTok{*}\KeywordTok{sum}\NormalTok{(}\KeywordTok{apply}\NormalTok{(dat1,}\DecValTok{2}\NormalTok{,var))}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\OperatorTok{:}\DecValTok{9}\NormalTok{) wss[i] <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{kmeans}\NormalTok{(dat1,}\DataTypeTok{centers=}\NormalTok{i)}\OperatorTok{$}\NormalTok{withinss)}
+\KeywordTok{plot}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{9}\NormalTok{, wss, }\DataTypeTok{type=}\StringTok{"b"}\NormalTok{, }\DataTypeTok{xlab=}\StringTok{"Number of Clusters"}\NormalTok{,}\DataTypeTok{ylab=}\StringTok{"Within groups sum of squares"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EV_files/figure-latex/unnamed-chunk-4-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{kmeans}\OperatorTok{$}\NormalTok{centers }\CommentTok{# centroids of clusters}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          PA1        PA2
+## 1 -0.5523910  0.5931719
+## 2  0.7528367 -0.8084157
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#number of samples in each cluster}
+\KeywordTok{table}\NormalTok{(kmeans}\OperatorTok{$}\NormalTok{cluster)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##   1   2 
+## 323 237
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{kmeans}\OperatorTok{$}\NormalTok{centers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          PA1        PA2
+## 1 -0.5523910  0.5931719
+## 2  0.7528367 -0.8084157
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Group1<-kmeans}\OperatorTok{$}\NormalTok{centers[}\DecValTok{1}\NormalTok{,]}
+\NormalTok{Group2<-kmeans}\OperatorTok{$}\NormalTok{centers[}\DecValTok{2}\NormalTok{,]}
+\KeywordTok{plot}\NormalTok{(Group1,Group2,}\DataTypeTok{type=}\StringTok{"n"}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(Group1,Group2, }\DataTypeTok{labels=}\KeywordTok{colnames}\NormalTok{(dat))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EV_files/figure-latex/unnamed-chunk-4-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pairs}\NormalTok{(dat1, }\DataTypeTok{col=}\NormalTok{kmeans}\OperatorTok{$}\NormalTok{cluster)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EV_files/figure-latex/unnamed-chunk-4-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{clusplot}\NormalTok{(dat1, kmeans}\OperatorTok{$}\NormalTok{cluster, }\DataTypeTok{color=}\OtherTok{TRUE}\NormalTok{,}\DataTypeTok{shade=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{labels=}\DecValTok{5}\NormalTok{, }\DataTypeTok{lines=}\DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EV_files/figure-latex/unnamed-chunk-4-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# library(rgl)}
+\CommentTok{# plot3d(fa$scores, col = kmeans$cluster)}
+\end{Highlighting}
+\end{Shaded}
+
+It is found the clusters are decided by the first factor (PA1). The
+first clustered group is more related to the higher value of PA1. Among
+the 11 chosen block groups with MUD, 3 block groups are clustered into
+the cluster 2nd group. We tried to go further analysis the difference
+between the 1st and the 2nd clustered group of the block groups chosen.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{GEOID_MUD =}\StringTok{ }\NormalTok{data[}\KeywordTok{c}\NormalTok{(}\DecValTok{6}\NormalTok{,}\DecValTok{40}\NormalTok{,}\DecValTok{42}\NormalTok{,}\DecValTok{51}\NormalTok{,}\DecValTok{73}\NormalTok{,}\DecValTok{88}\NormalTok{,}\DecValTok{120}\NormalTok{,}\DecValTok{146}\NormalTok{,}\DecValTok{301}\NormalTok{,}\DecValTok{391}\NormalTok{,}\DecValTok{545}\NormalTok{),}\DecValTok{1}\NormalTok{]}
+\NormalTok{GEOID_hetero =}\StringTok{ }\NormalTok{data[}\KeywordTok{c}\NormalTok{(}\DecValTok{6}\NormalTok{,}\DecValTok{120}\NormalTok{,}\DecValTok{545}\NormalTok{), }\DecValTok{1}\NormalTok{]}
+
+\NormalTok{mud =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(da[}\KeywordTok{c}\NormalTok{(}\DecValTok{40}\NormalTok{,}\DecValTok{42}\NormalTok{,}\DecValTok{51}\NormalTok{,}\DecValTok{73}\NormalTok{,}\DecValTok{88}\NormalTok{,}\DecValTok{146}\NormalTok{,}\DecValTok{301}\NormalTok{,}\DecValTok{391}\NormalTok{),])}
+\NormalTok{hetero =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(da[}\KeywordTok{c}\NormalTok{(}\DecValTok{6}\NormalTok{,}\DecValTok{120}\NormalTok{,}\DecValTok{545}\NormalTok{),])}
+
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{14}\NormalTok{) }\KeywordTok{boxplot}\NormalTok{(mud[[i]], hetero[[i]], }\DataTypeTok{ylab=} \KeywordTok{colnames}\NormalTok{(mud)[i], }\DataTypeTok{xlab=}\StringTok{"cluster 1, cluster 2"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EV_files/figure-latex/unnamed-chunk-5-1.pdf}
+\includegraphics{EV_files/figure-latex/unnamed-chunk-5-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(mud)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   pop.density         male           age35_64          white       
+##  Min.   : 3062   Min.   :0.3523   Min.   :0.1720   Min.   :0.4223  
+##  1st Qu.: 5392   1st Qu.:0.4493   1st Qu.:0.2778   1st Qu.:0.4732  
+##  Median : 8119   Median :0.4702   Median :0.3848   Median :0.5698  
+##  Mean   : 8136   Mean   :0.4688   Mean   :0.3434   Mean   :0.5955  
+##  3rd Qu.:10599   3rd Qu.:0.4974   3rd Qu.:0.4027   3rd Qu.:0.6908  
+##  Max.   :12787   Max.   :0.5460   Max.   :0.4571   Max.   :0.8604  
+##    nonfamily          renter           master          over100.000     
+##  Min.   :0.2833   Min.   :0.4674   Min.   :0.003106   Min.   :0.02683  
+##  1st Qu.:0.3104   1st Qu.:0.5332   1st Qu.:0.018097   1st Qu.:0.03581  
+##  Median :0.4699   Median :0.6913   Median :0.031601   Median :0.10082  
+##  Mean   :0.4288   Mean   :0.7194   Mean   :0.046371   Mean   :0.11098  
+##  3rd Qu.:0.5166   3rd Qu.:0.9231   3rd Qu.:0.067806   3rd Qu.:0.17282  
+##  Max.   :0.5400   Max.   :0.9787   Max.   :0.115686   Max.   :0.23667  
+##    med.income     over20units       buitbf2000     rantpctincome  
+##  Min.   :22727   Min.   :0.0000   Min.   :0.8405   Min.   :28.60  
+##  1st Qu.:29696   1st Qu.:0.1211   1st Qu.:0.8879   1st Qu.:29.70  
+##  Median :36070   Median :0.1542   Median :0.9551   Median :33.35  
+##  Mean   :38050   Mean   :0.1639   Mean   :0.9331   Mean   :35.02  
+##  3rd Qu.:45439   3rd Qu.:0.2114   3rd Qu.:0.9748   3rd Qu.:40.60  
+##  Max.   :57031   Max.   :0.3256   Max.   :1.0000   Max.   :44.50  
+##  X45min.commute    no.vechicle.renter
+##  Min.   :0.06738   Min.   :0.05205   
+##  1st Qu.:0.09991   1st Qu.:0.16511   
+##  Median :0.10368   Median :0.20556   
+##  Mean   :0.14269   Mean   :0.21595   
+##  3rd Qu.:0.14302   3rd Qu.:0.25659   
+##  Max.   :0.31761   Max.   :0.39344
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(hetero)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   pop.density         male           age35_64          white       
+##  Min.   : 3221   Min.   :0.4653   Min.   :0.2788   Min.   :0.1667  
+##  1st Qu.: 4304   1st Qu.:0.4805   1st Qu.:0.3467   1st Qu.:0.3637  
+##  Median : 5387   Median :0.4957   Median :0.4145   Median :0.5606  
+##  Mean   : 6328   Mean   :0.5067   Mean   :0.3814   Mean   :0.5516  
+##  3rd Qu.: 7881   3rd Qu.:0.5275   3rd Qu.:0.4328   3rd Qu.:0.7440  
+##  Max.   :10374   Max.   :0.5592   Max.   :0.4510   Max.   :0.9274  
+##    nonfamily          renter            master         over100.000    
+##  Min.   :0.2004   Min.   :0.09643   Min.   :0.01205   Min.   :0.1206  
+##  1st Qu.:0.2124   1st Qu.:0.37626   1st Qu.:0.03004   1st Qu.:0.1554  
+##  Median :0.2244   Median :0.65610   Median :0.04803   Median :0.1902  
+##  Mean   :0.2499   Mean   :0.49663   Mean   :0.11796   Mean   :0.2762  
+##  3rd Qu.:0.2747   3rd Qu.:0.69673   3rd Qu.:0.17092   3rd Qu.:0.3541  
+##  Max.   :0.3250   Max.   :0.73735   Max.   :0.29380   Max.   :0.5179  
+##    med.income      over20units        buitbf2000     rantpctincome  
+##  Min.   : 21250   Min.   :0.00000   Min.   :0.1070   Min.   :31.30  
+##  1st Qu.: 39518   1st Qu.:0.03502   1st Qu.:0.4242   1st Qu.:33.40  
+##  Median : 57786   Median :0.07004   Median :0.7415   Median :35.50  
+##  Mean   : 59956   Mean   :0.07782   Mean   :0.6162   Mean   :35.07  
+##  3rd Qu.: 79310   3rd Qu.:0.11673   3rd Qu.:0.8707   3rd Qu.:36.95  
+##  Max.   :100833   Max.   :0.16341   Max.   :1.0000   Max.   :38.40  
+##  X45min.commute    no.vechicle.renter
+##  Min.   :0.06771   Min.   :0.03346   
+##  1st Qu.:0.10956   1st Qu.:0.16488   
+##  Median :0.15142   Median :0.29630   
+##  Mean   :0.14371   Mean   :0.21458   
+##  3rd Qu.:0.18171   3rd Qu.:0.30514   
+##  Max.   :0.21199   Max.   :0.31398
+\end{verbatim}
+
+It is also found the 2nd clustered group which has the lower value of
+PA1 has the noticeable characteristics with lower population density,
+lower non-family households, higher median income, lower unit in a
+building, etc.
+
+This analysis is essential to make a decision to have EV chargers
+considering these different social characteristics with MUD especially
+addressing equity.
+
+\begin{figure}
+\centering
+\includegraphics{./figs/mud.jpg}
+\caption{Identifying Blocks}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{./figs/cluster.jpg}
+\caption{Clustered Blocks}
+\end{figure}
+
+
+\end{document}
