@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # EV charger investment in Tacoma
 * Cost-Benefit Analysis - Investor view
 * Commission vs. incentive approaches
@@ -121,7 +126,7 @@ M2 <- glm(formula = as.factor(select) ~ pop.density + nonfamily + renter + no.ve
 s=summary(M2)
 
 library(kableExtra)
-kable(coef(s), , caption = "Binomial logistic model [note]", booktabs = T) %>%
+kable(coef(s), caption = "Binomial logistic model [note]", booktabs = T) %>%
   kable_styling(latex_options = c("hold_position")) %>%
   kable_styling(latex_options = c("striped", "scale_down"))%>%
   add_footnote(c("AIC is 95.92"), notation = "symbol")
@@ -163,7 +168,7 @@ M2 <- glm(formula = as.factor(select) ~ pop.density + renter, family = binomial(
 s=summary(M2)
 
 library(kableExtra)
-kable(coef(s), , caption = "Binomial logistic model [note]", booktabs = T) %>%
+kable(coef(s), caption = "Binomial logistic model [note]", booktabs = T) %>%
   kable_styling(latex_options = c("hold_position")) %>%
   kable_styling(latex_options = c("striped", "scale_down"))%>%
   add_footnote(c("AIC is 72.75"), notation = "symbol")
