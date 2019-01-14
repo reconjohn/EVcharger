@@ -71,6 +71,9 @@ A few blocks were chosen based on multi-family housings occupying the main area 
 ![Selection of blocks](./figs/selection.jpg){ height=800px }
 
 
+In the scope of this study the social characteristics of different blocks in Tacoma were analyzed and blocks with MUDs are likely to have higher population density and a higher proportion of rental housing. Therefore, in order to achieve social equity in EVSE accessibility, the government should consider suitable charging solutions for MUDs in addition to public, workplace and single-family residence charging. Moreover, based on a performed cluster analysis, two clusters of MUD-intense blocks were found to have different social characteristics. Compared to Cluster 1, Cluster 2 has a higher population density, lower average income, lower education level, higher building age and a higher proportion of rental housing. The government needs to develop different strategies to address EVSE installations for the two clusters.
+
+
 ```{r}
 dat<-read.csv("../data/raw/dat - Copy1.csv")
 data= data.frame(matrix(NA,560,16))

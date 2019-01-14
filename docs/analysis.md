@@ -16,6 +16,17 @@ output:
 
 It is necessary to analyze how much would it benefit from installation of one charger. The benefit could be estimated by the fuel cost reduction as EV uses electricity. Assumping electricity price and gas price keep changing annually and annual discount factor is 6%, the cost - benefit analyses were constructed based on 4 cases. 1) onwer takes the installation cost of 1 charger and uses it, 2) owner takes the installation cost for the whole chargers (5 renters) and uses one of them, 3) owner doesn't live in the building, but pays the cost of all chargers (6 chargers) and get commission of 20% of the benefit generated from the chargers, and 4) with the case 3, there are additional 6 more EVs are using by sharing the 6 installed chargers. Net present value (NPV) and discounted payback period (DPP) are measured for each scenario. 
 
+
+To assess how rebates can be applied in the proposed policies, it needed to be analyzed how the expected benefits through the installation of a charger compare to their cost and calculate a break-even point. This analysis assumes EV-ready buildings and will be based on the outcome of the previous sections and the fuel cost reduction achieved by using EVs, plus the installation cost of the chargers. This break-even point heavily depends on the individual situation (condos, apartments, owner-renter relationships, etc.). Assuming annual changes of gasoline and energy prices and an annual discount factor of 6%, four different example cases were provided:
+
+* Case 1: Condo - Owner invests into the installation of one charger for personal use
+* Case 2: Mixed Condo / Rental apartments (condo owner owns 5 additional units in the building and rents them out to tenants) - Owner invests into multiple chargers and uses one of them
+* Case 3: Rental apartments - Landlord invests into a set of chargers (in this case we assume 6 chargers), while not using any of them for personal use and receiving a commission of 20% of the benefits generated through the chargers
+* Case 4: Rental apartments - Sharing chargers with case 3 above - 12 renters are sharing 6 installed chargers (2 renters share 1 charger)
+
+These cases all assume that the installed chargers will be used such that the upfront cost for a charger (level 2 stands alone) is \$2,050 for charger ready sites. The net present value (NPV) and discounted payback period (DPP) were measured for each scenario. We assume the annual vehicle miles travelled to be 10,230 miles per vehicle and an average MPG of 33 according to the standard applied to the year 2017. Thus, an internal combustion engine (ICE) vehicle requires 310 gallons of fuel on average per year. The total cost was calculated to be \$772 per year based in a fuel price of \$2.49 / gallon. For EVs we assume the same mileage and a fuel economy of 30 kWh / 100 miles (34 kWh/ 100 miles for Tesla models S - 90D, 30 kWh/ 100 miles for Nissan Leaf, 32 kWh/ 100 miles for Kia Soul). Thus, the annual energy requirement is 3069 kWh. Based on a price of \$0.077/kWh the annual cost is calculated as \$236.30, which results in an annual benefit in operational cost of \$535.70 per EV. For case 1, we achieve break-even within less than 6 years, which is reasonable as the investor directly receives their Return-On-Investment (ROI). In each case, Net present value (NPV), present value (PV) and future value (FV) would be measured. This is a case comparable to single family housing EVSE.
+
+
 ## Benefits
 
 ### Conventional vehicle
@@ -104,57 +115,57 @@ q
 
 ```
 ##    Gas price($/gallon) Elec.price($/kWh)     FV($)    PV($)     NPV($)
-## 1             2.669826        0.08374505  570.6324 538.3324 -1511.6676
-## 2             2.911727        0.09070153  624.2724 555.6002  -956.0674
-## 3             3.129356        0.09952650  664.6535 558.0559  -398.0114
-## 4             3.440411        0.10882314  732.5491 580.2475   182.2361
-## 5             3.732874        0.11937087  790.8418 590.9630   773.1991
-## 6             4.093360        0.12999968  869.9727 613.2964  1386.4955
-## 7             4.435636        0.14055012  943.6988 627.6136  2014.1091
-## 8             4.824144        0.15237986 1027.8310 644.8739  2658.9830
-## 9             5.255228        0.16510522 1122.4128 664.3544  3323.3374
-## 10            5.692146        0.17792377 1218.5171 680.4136  4003.7510
-## 11            6.092734        0.19383626 1293.8640 681.5914  4685.3424
-## 12            6.687965        0.20933985 1430.8053 711.0664  5396.4088
-## 13            7.356733        0.22901933 1577.7270 739.7000  6136.1088
-## 14            8.027663        0.24769375 1728.4035 764.4745  6900.5833
-## 15            8.681201        0.27079512 1860.1020 776.1556  7676.7389
-## 16            9.383375        0.29587739 2000.7986 787.6069  8464.3458
-## 17           10.116543        0.32011693 2153.6896 799.8037  9264.1495
-## 18           10.994381        0.34393914 2352.7089 824.2569 10088.4064
-## 19           11.779514        0.37690350 2494.9325 824.6076 10913.0141
-## 20           12.814268        0.40754384 2721.6710 848.6299 11761.6439
-## 21           13.936480        0.44569660 2952.4660 868.4838 12630.1278
-## 22           14.947734        0.47933109 3162.7303 877.6738 13507.8016
-## 23           16.318797        0.51528259 3477.4247 910.3803 14418.1818
-## 24           17.873076        0.55693967 3831.4056 946.2750 15364.4568
-## 25           19.182801        0.60279455 4096.6919 954.5236 16318.9804
+## 1             2.727164        0.08352432  589.0846 555.7402 -1494.2598
+## 2             2.946287        0.09041818  635.8555 565.9091  -928.3507
+## 3             3.184472        0.09774736  687.1998 576.9862  -351.3645
+## 4             3.430153        0.10468934  742.0558 587.7777   236.4132
+## 5             3.762013        0.11292095  819.6697 612.5049   848.9181
+## 6             4.077785        0.12320573  885.9949 624.5914  1473.5095
+## 7             4.445790        0.13307316  969.7934 644.9680  2118.4775
+## 8             4.807323        0.14558714 1043.4633 654.6818  2773.1593
+## 9             5.248038        0.15948881 1137.4207 673.2376  3446.3968
+## 10            5.711546        0.17448025 1235.0994 689.6731  4136.0699
+## 11            6.150035        0.18831016 1328.5868 699.8830  4835.9529
+## 12            6.744723        0.20463217 1462.8479 726.9906  5562.9434
+## 13            7.393583        0.22166004 1611.7359 755.6447  6318.5881
+## 14            7.981184        0.23894716 1740.8382 769.9744  7088.5625
+## 15            8.739921        0.25953851 1912.8517 798.1662  7886.7287
+## 16            9.414369        0.27833818 2064.2344 812.5782  8699.3069
+## 17           10.235995        0.30079181 2250.0285 835.5805  9534.8875
+## 18           11.100618        0.33062915 2426.4907 850.1060 10384.9934
+## 19           11.968639        0.36004035 2605.3142 861.0902 11246.0836
+## 20           12.827725        0.39083712 2777.1157 865.9178 12112.0015
+## 21           13.817804        0.42183874 2988.8960 879.1999 12991.2014
+## 22           15.157210        0.45528471 3301.4664 916.1737 13907.3751
+## 23           16.278401        0.49551660 3525.5638 922.9830 14830.3581
+## 24           17.687192        0.53295799 3847.3816 950.2207 15780.5788
+## 25           18.954134        0.57510591 4110.7816 957.8065 16738.3853
 ##    DPP(year)
 ## 1   0.000000
 ## 2   0.000000
 ## 3   0.000000
-## 4   3.685934
-## 5   4.308371
-## 6   6.260727
-## 7   8.209155
-## 8  10.123261
-## 9  12.002356
-## 10 13.884290
-## 11 15.874122
-## 12 17.589177
-## 13 19.295402
-## 14 21.026571
-## 15 22.890722
-## 16 24.746916
-## 17 26.583029
-## 18 28.239395
-## 19 30.234190
-## 20 31.859569
-## 21 33.542732
-## 22 35.390458
-## 23 36.837538
-## 24 38.236778
-## 25 40.096466
+## 4   3.597785
+## 5   4.385978
+## 6   6.359157
+## 7   8.284624
+## 8  10.235889
+## 9  12.119139
+## 10 13.997146
+## 11 15.909659
+## 12 17.652016
+## 13 19.361851
+## 14 21.206231
+## 15 22.881061
+## 16 24.705809
+## 17 26.411094
+## 18 28.216116
+## 19 30.060285
+## 20 31.987472
+## 21 33.776163
+## 22 35.179845
+## 23 37.067857
+## 24 38.607277
+## 25 40.475749
 ```
 
 ```r
@@ -162,7 +173,7 @@ mean(npv)
 ```
 
 ```
-## [1] 16375.2
+## [1] 16359.65
 ```
 
 ```r
@@ -170,7 +181,7 @@ mean(dpp)
 ```
 
 ```
-## [1] 3.63117
+## [1] 3.617318
 ```
 
 ```r
@@ -239,36 +250,36 @@ q
 
 ```
 ##    Gas price($/gallon) Elec.price($/kWh)     FV($)     PV($)       NPV($)
-## 1             2.671492        0.08357483  571.6714  539.3127 -11760.68732
-## 2             2.912024        0.09114258  623.0109  554.4775 -11206.20985
-## 3             3.150588        0.09983656  670.2839  562.7832 -10643.42660
-## 4             3.461831        0.10902389  738.5734  585.0193 -10058.40727
-## 5             3.783575        0.11980259  805.2341  601.7178  -9456.68950
-## 6             4.157323        0.13097078  886.8208  625.1737  -8831.51580
-## 7             4.521663        0.14289902  963.1583  640.5553  -8190.96050
-## 8             4.939376        0.15303753 1061.5343  666.0198  -7524.94072
-## 9             5.345041        0.16629902 1146.5909  678.6654  -6846.27533
-## 10            5.828501        0.17832643 1259.5516  703.3270  -6142.94828
-## 11            6.243269        0.19114562 1348.7875  710.5244  -5432.42383
-## 12            6.719870        0.20748109 1446.4002  718.8166  -4713.60723
-## 13            7.300413        0.22583652 1570.0358  736.0941  -3977.51316
-## 14            7.923158        0.24414735 1706.8908  754.9594  -3222.55372
-## 15            8.482182        0.26683368 1810.5637  755.4850  -2467.06875
-## 16            9.273532        0.29332073 1974.5936  777.2914  -1689.77733
-## 17           10.036061        0.31823546 2134.5142  792.6826   -897.09470
-## 18           10.802181        0.34101300 2302.1071  806.5289    -90.56579
-## 19           11.765578        0.37409569 2499.2296  826.0279    735.46210
-## 20           12.857145        0.40616455 2739.1960  854.0942   1589.55635
-## 21           13.902000        0.43806985 2965.1837  872.2248   2461.78117
-## 22           15.146710        0.47186276 3247.3333  901.1516   3362.93273
-## 23           16.610853        0.51334745 3573.9011  935.6375   4298.57024
-## 24           18.153034        0.56284904 3900.0567  963.2303   5261.80058
-## 25           19.563502        0.61055396 4190.8954  976.4729   6238.27347
-## 26           21.156426        0.66144041 4528.5315  995.4166   7233.69011
-## 27           23.232819        0.72129164 4988.5300 1034.4612   8268.15136
-## 28           24.941160        0.78388983 5326.0017 1041.9265   9310.07783
-## 29           26.891294        0.84465345 5744.0598 1060.1049  10370.18278
-## 30           29.441136        0.90399608 6352.3882 1106.0151  11476.19792
+## 1             2.673080        0.08283212  574.4430  541.9273 -11758.07266
+## 2             2.878069        0.08908196  618.8089  550.7377 -11207.33496
+## 3             3.102304        0.09540812  668.9066  561.6269 -10645.70810
+## 4             3.359906        0.10479140  719.9661  570.2806 -10075.42751
+## 5             3.693291        0.11391479  795.3159  594.3063  -9481.12124
+## 6             4.059514        0.12303072  880.8680  620.9772  -8860.14407
+## 7             4.346806        0.13433106  935.2479  621.9933  -8238.15077
+## 8             4.744481        0.14655383 1021.0153  640.5976  -7597.55315
+## 9             5.160121        0.16093214 1105.7368  654.4839  -6943.06923
+## 10            5.636118        0.17367668 1214.1829  677.9934  -6265.07585
+## 11            6.141517        0.19012944 1320.3630  695.5507  -5569.52511
+## 12            6.716151        0.20471896 1453.7242  722.4564  -4847.06872
+## 13            7.370496        0.22448091 1595.9219  748.2304  -4098.83828
+## 14            7.950249        0.24548546 1711.1822  756.8575  -3341.98073
+## 15            8.731959        0.26852092 1882.8167  785.6336  -2556.34708
+## 16            9.478170        0.29401233 2035.9088  801.4279  -1754.91915
+## 17           10.231295        0.31722019 2198.1526  816.3157   -938.60348
+## 18           11.140537        0.34334649 2399.8360  840.7676    -97.83586
+## 19           12.080856        0.36945361 2611.2122  863.0396    765.20374
+## 20           13.210653        0.40068583 2865.5976  893.5069   1658.71060
+## 21           14.196293        0.43796756 3056.7283  899.1532   2557.86375
+## 22           15.548310        0.47856367 3351.2641  929.9929   3487.85661
+## 23           16.755620        0.51920620 3600.7985  942.6792   4430.53579
+## 24           18.030838        0.56418562 3858.0741  952.8615   5383.39733
+## 25           19.480467        0.60885131 4170.3801  971.6929   6355.09018
+## 26           21.201048        0.65194356 4571.5102 1004.8638   7359.95396
+## 27           22.786003        0.70672319 4894.7275 1015.0096   8374.96357
+## 28           24.687310        0.77171588 5284.6700 1033.8407   9408.80431
+## 29           27.015416        0.82920540 5829.9477 1075.9561  10484.76044
+## 30           29.265370        0.90465725 6295.8715 1096.1750  11580.93544
 ##    DPP(year)
 ## 1    0.00000
 ## 2    0.00000
@@ -288,18 +299,18 @@ q
 ## 16   0.00000
 ## 17   0.00000
 ## 18   0.00000
-## 19  18.10964
-## 20  19.86110
-## 21  21.82242
-## 22  23.73182
-## 23  25.59427
-## 24  27.46266
-## 25  29.38858
-## 26  31.26700
-## 27  32.99271
-## 28  34.93545
-## 29  36.78222
-## 30  38.37617
+## 19  18.11336
+## 20  19.85640
+## 21  21.84475
+## 22  23.75041
+## 23  25.69994
+## 24  27.64972
+## 25  29.54023
+## 26  31.32433
+## 27  33.25112
+## 28  35.10083
+## 29  36.74460
+## 30  38.56486
 ```
 
 ```r
@@ -307,7 +318,7 @@ mean(npv)
 ```
 
 ```
-## [1] 21317.72
+## [1] 21528.54
 ```
 
 ```r
@@ -315,7 +326,7 @@ mean(dpp)
 ```
 
 ```
-## [1] 18.32301
+## [1] 18.24586
 ```
 
 ```r
@@ -388,36 +399,36 @@ q
 
 ```
 ##    Gas price($/gallon) Elec.price($/kWh)     FV($)     PV($)      NPV($)
-## 1             2.701327        0.08435266  694.2396  654.9430 -11645.0570
-## 2             2.922005        0.09159535  749.6586  667.1935 -10977.8635
-## 3             3.209460        0.10001647  825.5786  693.1717 -10284.6919
-## 4             3.450529        0.10804450  885.6905  701.5498  -9583.1420
-## 5             3.713179        0.11752872  948.4680  708.7505  -8874.3916
-## 6             3.998281        0.12655497 1021.2839  719.9649  -8154.4267
-## 7             4.344456        0.13543177 1117.3697  743.1147  -7411.3120
-## 8             4.739218        0.14868702 1215.4045  762.5598  -6648.7522
-## 9             5.124656        0.16130404 1312.3217  776.7612  -5871.9910
-## 10            5.513357        0.17361431 1411.5821  788.2201  -5083.7709
-## 11            5.981950        0.18841788 1531.3800  806.7119  -4277.0591
-## 12            6.445496        0.20213412 1653.3052  821.6420  -3455.4171
-## 13            6.982688        0.21742880 1796.8131  842.4161  -2613.0009
-## 14            7.664846        0.23306517 1992.9902  881.5015  -1731.4995
-## 15            8.385914        0.25594873 2176.9522  908.3661   -823.1334
-## 16            9.077929        0.27887638 2349.9437  925.0466    101.9133
-## 17            9.963860        0.29866669 2606.6264  968.0083   1069.9215
-## 18           10.764008        0.32627570 2802.6027  981.8744   2051.7960
-## 19           11.711700        0.35596408 3045.8080 1006.6792   3058.4751
-## 20           12.740631        0.38635687 3316.6397 1034.1439   4092.6191
-## 21           13.784176        0.42172911 3574.5695 1051.4789   5144.0980
-## 22           14.903818        0.46219313 3842.0554 1066.1899   6210.2880
-## 23           16.260234        0.50493968 4189.2151 1096.7250   7307.0130
-## 24           17.756814        0.54121399 4612.3520 1139.1520   8446.1650
-## 25           19.040824        0.59387337 4896.0697 1140.7775   9586.9425
-## 26           20.395633        0.64934255 5195.7767 1142.0838  10729.0264
-## 27           21.995425        0.69520621 5621.9925 1165.8211  11894.8474
-## 28           24.141993        0.74821821 6225.2833 1217.8531  13112.7005
-## 29           26.296622        0.80269293 6826.1857 1259.8186  14372.5191
-## 30           28.496746        0.87885708 7364.1345 1282.1704  15654.6895
+## 1             2.720673        0.08247666  708.3452  668.2502 -11631.7498
+## 2             2.931631        0.09018967  758.4164  674.9879 -10956.7619
+## 3             3.208628        0.09869319  830.1423  697.0035 -10259.7585
+## 4             3.466939        0.10844949  890.3036  705.2038  -9554.5547
+## 5             3.737492        0.11813357  955.2848  713.8444  -8840.7103
+## 6             4.089283        0.12895579 1046.2948  737.5965  -8103.1138
+## 7             4.401446        0.14121834 1117.2589  743.0410  -7360.0728
+## 8             4.829753        0.15431807 1228.3457  770.6793  -6589.3935
+## 9             5.217470        0.16728808 1324.8102  784.1531  -5805.2404
+## 10            5.724121        0.18348923 1453.6189  811.6932  -4993.5472
+## 11            6.157959        0.20167077 1548.0475  815.4921  -4178.0550
+## 12            6.740221        0.21750442 1706.3370  847.9972  -3330.0578
+## 13            7.319049        0.23625101 1852.6209  868.5810  -2461.4769
+## 14            7.876846        0.25729564 1982.6183  876.9140  -1584.5629
+## 15            8.582956        0.28239884 2152.8410  898.3053   -686.2576
+## 16            9.335488        0.31035587 2329.8229  917.1261    230.8685
+## 17           10.103390        0.33995919 2506.4592  930.8098   1161.6783
+## 18           10.979399        0.36985649 2722.2289  953.7160   2115.3943
+## 19           12.049488        0.40510609 2990.4848  988.3941   3103.7884
+## 20           13.182436        0.43922275 3286.2967 1024.6829   4128.4713
+## 21           14.384821        0.47769680 3591.8916 1056.5743   5185.0456
+## 22           15.697965        0.51674455 3936.5762 1092.4200   6277.4656
+## 23           17.115926        0.56035563 4303.4467 1126.6306   7404.0961
+## 24           18.428082        0.60958326 4610.2735 1138.6386   8542.7348
+## 25           19.718310        0.66255251 4895.1631 1140.5663   9683.3011
+## 26           21.423983        0.72686747 5292.8143 1163.4137  10846.7147
+## 27           23.552234        0.78498384 5870.4926 1217.3520  12064.0667
+## 28           25.407144        0.86172665 6277.8906 1228.1446  13292.2114
+## 29           27.307957        0.94196583 6689.4881 1234.5901  14526.8015
+## 30           29.352682        1.01432785 7183.6310 1250.7429  15777.5444
 ##    DPP(year)
 ## 1    0.00000
 ## 2    0.00000
@@ -434,21 +445,21 @@ q
 ## 13   0.00000
 ## 14   0.00000
 ## 15   0.00000
-## 16  15.88983
-## 17  16.10528
-## 18  18.08967
-## 19  20.03818
-## 20  21.95749
-## 21  23.89225
-## 22  25.82475
-## 23  27.66258
-## 24  29.41443
-## 25  31.40387
-## 26  33.39425
-## 27  35.20298
-## 28  36.76706
-## 29  38.40840
-## 30  40.20952
+## 16  15.74827
+## 17  16.24803
+## 18  18.21805
+## 19  20.14023
+## 20  22.02902
+## 21  23.90741
+## 22  25.74638
+## 23  27.57189
+## 24  29.50259
+## 25  31.48991
+## 26  33.32318
+## 27  34.91009
+## 28  36.82300
+## 29  38.76650
+## 30  40.61454
 ```
 
 ```r
@@ -456,7 +467,7 @@ mean(npv)
 ```
 
 ```
-## [1] 26232.03
+## [1] 26205.21
 ```
 
 ```r
@@ -464,7 +475,7 @@ mean(dpp)
 ```
 
 ```
-## [1] 15.6409
+## [1] 15.65944
 ```
 
 ```r
@@ -535,26 +546,26 @@ q
 
 ```
 ##    Gas price($/gallon) Elec.price($/kWh)    FV($)    PV($)      NPV($)
-## 1             2.736259        0.08277969 1426.055 1345.335 -10954.6652
-## 2             2.968567        0.08944176 1549.822 1379.336  -9575.3291
-## 3             3.235900        0.09763633 1688.359 1417.579  -8157.7502
-## 4             3.551887        0.10615940 1860.677 1473.830  -6683.9201
-## 5             3.855002        0.11656823 2009.527 1501.635  -5182.2848
-## 6             4.139014        0.12537143 2155.990 1519.888  -3662.3966
-## 7             4.431245        0.13616362 2293.920 1525.588  -2136.8091
-## 8             4.748189        0.14917118 2433.917 1527.070   -609.7392
-## 9             5.117312        0.16295257 2607.037 1543.101    933.3618
-## 10            5.567974        0.17696414 2839.125 1585.353   2518.7146
-## 11            6.102246        0.19245591 3122.517 1644.903   4163.6178
-## 12            6.631992        0.20763138 3404.872 1692.117   5855.7350
-## 13            7.287410        0.22542554 3761.439 1763.509   7619.2442
-## 14            7.856218        0.24618046 4031.759 1783.251   9402.4951
-## 15            8.613850        0.26843791 4431.498 1849.109  11251.6045
-## 16            9.273255        0.28859033 4773.661 1879.134  13130.7383
-## 17           10.159799        0.31273335 5255.421 1951.676  15082.4147
-## 18           11.042436        0.33590887 5741.402 2011.465  17093.8793
-## 19           12.058351        0.36339217 6294.811 2080.517  19174.3964
-## 20           12.912303        0.39873181 6669.854 2079.692  21254.0884
+## 1             2.675807        0.08267896 1381.820 1303.604 -10996.3963
+## 2             2.878915        0.08942964 1483.210 1320.052  -9676.3445
+## 3             3.108822        0.09828414 1589.042 1334.190  -8342.1541
+## 4             3.341620        0.10681191 1699.432 1346.109  -6996.0450
+## 5             3.627976        0.11582240 1846.112 1379.523  -5616.5224
+## 6             3.955276        0.12633421 2012.198 1418.520  -4198.0023
+## 7             4.247349        0.13687315 2151.874 1431.119  -2766.8829
+## 8             4.552771        0.14791372 2297.788 1441.661  -1325.2222
+## 9             4.976895        0.15905148 2531.301 1498.273    173.0507
+## 10            5.336253        0.17182656 2704.567 1510.216   1683.2666
+## 11            5.856590        0.18644487 2984.024 1571.947   3255.2133
+## 12            6.282773        0.20395474 3172.134 1576.454   4831.6669
+## 13            6.896274        0.22362141 3483.722 1633.305   6464.9716
+## 14            7.436682        0.24321182 3741.490 1654.865   8119.8363
+## 15            7.999529        0.26154887 4025.185 1679.569   9799.4054
+## 16            8.756095        0.28307570 4429.512 1743.661  11543.0664
+## 17            9.574788        0.30523889 4875.375 1810.541  13353.6072
+## 18           10.429342        0.33413458 5298.329 1856.237  15209.8438
+## 19           11.438461        0.36700424 5807.009 1919.292  17129.1357
+## 20           12.418494        0.40147468 6282.258 1958.838  19087.9735
 ##    DPP(year)
 ## 1   0.000000
 ## 2   0.000000
@@ -564,18 +575,18 @@ q
 ## 6   0.000000
 ## 7   0.000000
 ## 8   0.000000
-## 9   8.395139
-## 10  9.588741
-## 11 11.531224
-## 12 13.460597
-## 13 15.320502
-## 14 17.272671
-## 15 19.084878
-## 16 20.987655
-## 17 22.727928
-## 18 24.498225
-## 19 26.216169
-## 20 28.219825
+## 9   8.884500
+## 10  9.114587
+## 11 11.070817
+## 12 13.064896
+## 13 14.958215
+## 14 16.906647
+## 15 18.834476
+## 16 20.620017
+## 17 22.375480
+## 18 24.193914
+## 19 25.924716
+## 20 27.744540
 ```
 
 ```r
@@ -583,7 +594,7 @@ mean(npv)
 ```
 
 ```
-## [1] 31108.62
+## [1] 30991.81
 ```
 
 ```r
@@ -591,7 +602,7 @@ mean(dpp)
 ```
 
 ```
-## [1] 8.542252
+## [1] 8.564768
 ```
 
 ```r
@@ -617,6 +628,161 @@ plot(q[,2], main = "Electricity price", ylab="$/kWh", xlab="year",
 ![](analysis_files/figure-html/unnamed-chunk-5-4.png)<!-- -->
 
 
+# Commission vs. Incentive 
+
+To achieve the DPP of 5 years like the case 1, 1 owner single family, commission rate and incentive rate were estimated for each scenario: case 3, rental apartment (no owner living) and case 4, rental apartment (sharing chargers in addition to the case 3 above - 12 renters are sharing 6 installed chargers).
+
+## Incentive comparison (case 3)
+
+For the case 3, rental apartment, with the commission rate, 50%, it is estimated that about 40% incentive is required to meet the 5 year's DPP. It also shows there is not much improvement of shortening the DPP even if there is no incentive (in this case, the DPP is 8 years). We can see incentive supports a little from the investment perspectives. 
+
+
+```r
+par(mfrow = c(1,2))
+
+npv = c()
+dpp = c()
+com = 0.5
+for(j in 1:100){
+  rgs=gas_c
+  rei=u_cost
+  cf=-inst *6*0.6
+  q=data.frame(matrix(NA,30,6))
+  for(i in 1:30){
+    rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+    rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+    fv=com*6*(rgs*gas - kw*rei)
+    pv= fv/(1+rt)^i
+    old=cf
+    cf=cf+pv
+    dp=ifelse(cf>0,i-1+abs(old/pv),0)
+    q[i,]=c(rgs,rei,fv,pv,cf,dp)
+  }
+  npv[j]=sum(q[,4])-inst #net present value
+  dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+
+plot(q[,3], main = "Cash flow of incentive (40%) \n with 50% commission", ylab="$", xlab="year",
+     type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("topright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.7)
+
+
+npv = c()
+dpp = c()
+com = 0.5
+for(j in 1:100){
+  rgs=gas_c
+  rei=u_cost
+  cf=-inst * 6
+  q=data.frame(matrix(NA,30,6))
+  for(i in 1:30){
+    rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+    rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+    fv=com*6*(rgs*gas - kw*rei)
+    pv= fv/(1+rt)^i
+    old=cf
+    cf=cf+pv
+    dp=ifelse(cf>0,i-1+abs(old/pv),0)
+    q[i,]=c(rgs,rei,fv,pv,cf,dp)
+  }
+  npv[j]=sum(q[,4])-inst #net present value
+  dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+plot(q[,3], main = "Cash flow of incentive (0%) \n with 50% commission", ylab="$", xlab="year",
+     type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("topright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.7)
+```
+
+![](analysis_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+
+## Commission comparison (case 4)
+
+In case 4, rental apartment with the sharing chargers, a scenario of 50% commission rate and no incentive is estimated to have the same DPP of 5 years of the scenario of 20% commission rate and 60% incentive rate, which confirms that the impact of commission rate change is more than the incentive rate change on DPP. Policy makers can take this account to support investment of chargers.  
+
+
+```r
+npv = c()
+dpp = c()
+com = 0.2
+for(j in 1:100){
+  rgs=gas_c
+  rei=u_cost
+  cf=-inst *6*0.4
+  q=data.frame(matrix(NA,30,6))
+  for(i in 1:30){
+    rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+    rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+    fv=com*12*(rgs*gas - kw*rei)
+    pv= fv/(1+rt)^i
+    old=cf
+    cf=cf+pv
+    dp=ifelse(cf>0,i-1+abs(old/pv),0)
+    q[i,]=c(rgs,rei,fv,pv,cf,dp)
+  }
+  npv[j]=sum(q[,4])-inst #net present value
+  dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+par(mfrow= c(1,2))
+plot(q[,3], main = "Cash flow of incentive (60%) \n with 20% commission", ylab="$", xlab="year",
+     type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("topright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.7)
+
+
+npv = c()
+dpp = c()
+com = 0.5
+for(j in 1:100){
+  rgs=gas_c
+  rei=u_cost
+  cf=-inst * 6
+  q=data.frame(matrix(NA,30,6))
+  for(i in 1:30){
+    rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+    rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+    fv=com*12*(rgs*gas - kw*rei)
+    pv= fv/(1+rt)^i
+    old=cf
+    cf=cf+pv
+    dp=ifelse(cf>0,i-1+abs(old/pv),0)
+    q[i,]=c(rgs,rei,fv,pv,cf,dp)
+  }
+  npv[j]=sum(q[,4])-inst #net present value
+  dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+plot(q[,3], main = "Cash flow of incentive (0%) \n with 50% commission", ylab="$", xlab="year",
+     type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("topright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.7)
+```
+
+![](analysis_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
+
+Adding a 60% incentive of upfront cost to case 4, shows a DPP of 4 years, which can also be achieved through changing the commission fee to 50%. It also confirms that commissions are more effective to reach the goal of a shorter DPP than incentivizing the upfront cost.
+
+Furthermore, it was found that sharing chargers by two, is as effective as collecting commissions. By increasing the number of users for a given charger we can enhance the mechanism for owners to reach shorter DPP. By optimizing the utilization rate of chargers depending upon the local conditions, it can reduce the commissioning rate while getting the same result and thus deliver added value to both the renter and the landlord.
+
+
+# Policy optimization
+
+We start our policy effect analysis based on a case that assumes the installation of stand-alone level 2 chargers (\$2,050 installation cost) with a budget limited to 100 chargers (i.e. $205,000), For the eleven MUD block groups that were defined in the cluster analysis for Tacoma we find three of them related to the higher income cluster (1) while cluster 2 is more related to the characteristics of the remaining 8 block groups. To keep this analysis within simple bounds, we only consider the ownership structure cases 1 and 2 from the cost benefit analysis. 
+
+Based on the identified renter and owner distribution structure of the MUD block clusters 1 and 2, the cluster 1 (i.e. 3 block groups) are assumed to include 30% of MUDs with the case 1 structure and 70% of the case 2 structure; cluster 2 (8 block groups) is assumed to have 10% of the case 1 structure and 90% of the case 2 structure.
+
+The aim of the following analysis is to check how different social or rent household structures in MUDs affect the outcome of the selected policy application in terms of efficiency and equity. We considered a cash flow time horizon of 20 years to receive an average expected NPV per unit charger. Furthermore, based on the population of each block group, each of them was weighted in proportion to its population assuming that the EVSE demand is proportional to the population. 
+
+These benefit weights were added to the objective functions of the maximization problem. The policy parameter α was set to different values depending on the policy goals. The efficiency-oriented policy seeks to maximize the benefit by focusing more on efficiency. By concentrating on cA_1, cA_2 and cA_3, which happen to be all cluster 1, the maximized benefit in terms of saved energy turns out to be $446,695 for a 20-year time horizon. This is the maximum benefit from installing 100 chargers. Thus, focusing on these block groups would maximize the efficiency. 
+
+On the other hand, the equity policy seeks to maximize the benefit while focusing more on equity. The optimal solution was found and the expected benefit in terms of saved energy is estimated to $78,191 over a 20-year time horizon. This benefit is far lower than for the efficiency policy while it improves the equal resource allocation for all MUD block groups regardless of which cluster they are belong to. 
+
+
 
 ```r
 library(nloptr)
@@ -637,7 +803,7 @@ barplot(pop, col = "orange", main = "Population proportion in MUD blocks",
         xlab="MUDs", ylab="Relative portion of population",cex.names = 0.7)
 ```
 
-![](analysis_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![](analysis_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
 
 ```r
 # Objective function EQUITY
@@ -701,5 +867,7 @@ barplot(bar, col = "red", main = "Efficiency oriented policy",
         xlab="MUDs", ylim = c(0,80), ylab="number of chargers",cex.names = 0.7)
 ```
 
-![](analysis_files/figure-html/unnamed-chunk-6-2.png)<!-- -->
+![](analysis_files/figure-html/unnamed-chunk-8-2.png)<!-- -->
+
+
 

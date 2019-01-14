@@ -118,6 +118,8 @@ corrplot.mixed(cor(data[-c(1,2)]),upper="ellipse")
 
 ![Correlations of indipendeant variables](./docs/EV_files/figure-html/Fig2-1.png)
 
+In the scope of this study the social characteristics of different blocks in Tacoma were analyzed and blocks with MUDs are likely to have higher population density and a higher proportion of rental housing. Therefore, in order to achieve social equity in EVSE accessibility, the government should consider suitable charging solutions for MUDs in addition to public, workplace and single-family residence charging. Moreover, based on a performed cluster analysis, two clusters of MUD-intense blocks were found to have different social characteristics. Compared to Cluster 1, Cluster 2 has a higher population density, lower average income, lower education level, higher building age and a higher proportion of rental housing. The government needs to develop different strategies to address EVSE installations for the two clusters.
+
 
 ```r
 M1 <- glm(as.factor(select)~ . -Geoid,data, family=binomial())
@@ -1077,6 +1079,161 @@ plot(q[,2], main = "Electricity price", ylab="$/kWh", xlab="year",
 ![](./docs/analysis_files/figure-html/unnamed-chunk-5-4.png)<!-- -->
 
 
+# Commission vs. Incentive 
+
+To achieve the DPP of 5 years like the case 1, 1 owner single family, commission rate and incentive rate were estimated for each scenario: case 3, rental apartment (no owner living) and case 4, rental apartment (sharing chargers in addition to the case 3 above - 12 renters are sharing 6 installed chargers).
+
+## Incentive comparison (case 3)
+
+For the case 3, rental apartment, with the commission rate, 50%, it is estimated that about 40% incentive is required to meet the 5 year's DPP. It also shows there is not much improvement of shortening the DPP even if there is no incentive (in this case, the DPP is 8 years). We can see incentive supports a little from the investment perspectives. 
+
+
+```r
+par(mfrow = c(1,2))
+
+npv = c()
+dpp = c()
+com = 0.5
+for(j in 1:100){
+  rgs=gas_c
+  rei=u_cost
+  cf=-inst *6*0.6
+  q=data.frame(matrix(NA,30,6))
+  for(i in 1:30){
+    rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+    rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+    fv=com*6*(rgs*gas - kw*rei)
+    pv= fv/(1+rt)^i
+    old=cf
+    cf=cf+pv
+    dp=ifelse(cf>0,i-1+abs(old/pv),0)
+    q[i,]=c(rgs,rei,fv,pv,cf,dp)
+  }
+  npv[j]=sum(q[,4])-inst #net present value
+  dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+
+plot(q[,3], main = "Cash flow of incentive (40%) \n with 50% commission", ylab="$", xlab="year",
+     type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("topright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.7)
+
+
+npv = c()
+dpp = c()
+com = 0.5
+for(j in 1:100){
+  rgs=gas_c
+  rei=u_cost
+  cf=-inst * 6
+  q=data.frame(matrix(NA,30,6))
+  for(i in 1:30){
+    rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+    rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+    fv=com*6*(rgs*gas - kw*rei)
+    pv= fv/(1+rt)^i
+    old=cf
+    cf=cf+pv
+    dp=ifelse(cf>0,i-1+abs(old/pv),0)
+    q[i,]=c(rgs,rei,fv,pv,cf,dp)
+  }
+  npv[j]=sum(q[,4])-inst #net present value
+  dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+plot(q[,3], main = "Cash flow of incentive (0%) \n with 50% commission", ylab="$", xlab="year",
+     type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("topright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.7)
+```
+
+![](./docs/analysis_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+
+## Commission comparison (case 4)
+
+In case 4, rental apartment with the sharing chargers, a scenario of 50% commission rate and no incentive is estimated to have the same DPP of 5 years of the scenario of 20% commission rate and 60% incentive rate, which confirms that the impact of commission rate change is more than the incentive rate change on DPP. Policy makers can take this account to support investment of chargers.  
+
+
+```r
+npv = c()
+dpp = c()
+com = 0.2
+for(j in 1:100){
+  rgs=gas_c
+  rei=u_cost
+  cf=-inst *6*0.4
+  q=data.frame(matrix(NA,30,6))
+  for(i in 1:30){
+    rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+    rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+    fv=com*12*(rgs*gas - kw*rei)
+    pv= fv/(1+rt)^i
+    old=cf
+    cf=cf+pv
+    dp=ifelse(cf>0,i-1+abs(old/pv),0)
+    q[i,]=c(rgs,rei,fv,pv,cf,dp)
+  }
+  npv[j]=sum(q[,4])-inst #net present value
+  dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+par(mfrow= c(1,2))
+plot(q[,3], main = "Cash flow of incentive (60%) \n with 20% commission", ylab="$", xlab="year",
+     type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("topright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.7)
+
+
+npv = c()
+dpp = c()
+com = 0.5
+for(j in 1:100){
+  rgs=gas_c
+  rei=u_cost
+  cf=-inst * 6
+  q=data.frame(matrix(NA,30,6))
+  for(i in 1:30){
+    rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+    rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+    fv=com*12*(rgs*gas - kw*rei)
+    pv= fv/(1+rt)^i
+    old=cf
+    cf=cf+pv
+    dp=ifelse(cf>0,i-1+abs(old/pv),0)
+    q[i,]=c(rgs,rei,fv,pv,cf,dp)
+  }
+  npv[j]=sum(q[,4])-inst #net present value
+  dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+plot(q[,3], main = "Cash flow of incentive (0%) \n with 50% commission", ylab="$", xlab="year",
+     type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("topright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.7)
+```
+
+![](./docs/analysis_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
+
+Adding a 60% incentive of upfront cost to case 4, shows a DPP of 4 years, which can also be achieved through changing the commission fee to 50%. It also confirms that commissions are more effective to reach the goal of a shorter DPP than incentivizing the upfront cost.
+
+Furthermore, it was found that sharing chargers by two, is as effective as collecting commissions. By increasing the number of users for a given charger we can enhance the mechanism for owners to reach shorter DPP. By optimizing the utilization rate of chargers depending upon the local conditions, it can reduce the commissioning rate while getting the same result and thus deliver added value to both the renter and the landlord.
+
+
+# Policy optimization
+
+We start our policy effect analysis based on a case that assumes the installation of stand-alone level 2 chargers (\$2,050 installation cost) with a budget limited to 100 chargers (i.e. $205,000), For the eleven MUD block groups that were defined in the cluster analysis for Tacoma we find three of them related to the higher income cluster (1) while cluster 2 is more related to the characteristics of the remaining 8 block groups. To keep this analysis within simple bounds, we only consider the ownership structure cases 1 and 2 from the cost benefit analysis. 
+
+Based on the identified renter and owner distribution structure of the MUD block clusters 1 and 2, the cluster 1 (i.e. 3 block groups) are assumed to include 30% of MUDs with the case 1 structure and 70% of the case 2 structure; cluster 2 (8 block groups) is assumed to have 10% of the case 1 structure and 90% of the case 2 structure.
+
+The aim of the following analysis is to check how different social or rent household structures in MUDs affect the outcome of the selected policy application in terms of efficiency and equity. We considered a cash flow time horizon of 20 years to receive an average expected NPV per unit charger. Furthermore, based on the population of each block group, each of them was weighted in proportion to its population assuming that the EVSE demand is proportional to the population. 
+
+These benefit weights were added to the objective functions of the maximization problem. The policy parameter α was set to different values depending on the policy goals. The efficiency-oriented policy seeks to maximize the benefit by focusing more on efficiency. By concentrating on cA_1, cA_2 and cA_3, which happen to be all cluster 1, the maximized benefit in terms of saved energy turns out to be $446,695 for a 20-year time horizon. This is the maximum benefit from installing 100 chargers. Thus, focusing on these block groups would maximize the efficiency. 
+
+On the other hand, the equity policy seeks to maximize the benefit while focusing more on equity. The optimal solution was found and the expected benefit in terms of saved energy is estimated to $78,191 over a 20-year time horizon. This benefit is far lower than for the efficiency policy while it improves the equal resource allocation for all MUD block groups regardless of which cluster they are belong to. 
+
+
 
 ```r
 library(nloptr)
@@ -1097,7 +1254,7 @@ barplot(pop, col = "orange", main = "Population proportion in MUD blocks",
         xlab="MUDs", ylab="Relative portion of population",cex.names = 0.7)
 ```
 
-![](./docs/analysis_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![](./docs/analysis_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
 
 ```r
 # Objective function EQUITY
@@ -1161,5 +1318,7 @@ barplot(bar, col = "red", main = "Efficiency oriented policy",
         xlab="MUDs", ylim = c(0,80), ylab="number of chargers",cex.names = 0.7)
 ```
 
-![](./docs/analysis_files/figure-html/unnamed-chunk-6-2.png)<!-- -->
+![](./docs/analysis_files/figure-html/unnamed-chunk-8-2.png)<!-- -->
+
+
 
