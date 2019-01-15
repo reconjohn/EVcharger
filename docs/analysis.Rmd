@@ -276,6 +276,136 @@ plot(q[,2], main = "Electricity price", ylab="$/kWh", xlab="year",
 
 # Commission vs. Incentive 
 
+As the previous cost benefit analysis shows, in order to make the investment of chargers as
+effective as for single family households, there should be support to MUD owners who need to
+invest their private funds for the installation of chargers. Taking into account the previous case
+analysis, a DPP of 5 years should be targeted if we aim at achieving a similar benefit as for
+case 1. This section investigates how high the incentives would have to be to achieve this goal
+for case 2, case 3 and case 4.
+
+For case 2, the incentive would have to be at least 80% of the upfront cost. A figure below shows
+that an incentive of 50% would still not be enough.
+
+```{r}
+npv = c()
+dpp = c()
+for(j in 1:100){
+rgs=gas_c
+rei=u_cost
+cf=-inst *6*0.5
+q=data.frame(matrix(NA,30,6))
+for(i in 1:30){
+rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+fv=(rgs*gas - kw*rei)
+pv= fv/(1+rt)^i
+old=cf
+cf=cf+pv
+dp=ifelse(cf>0,i-1+abs(old/pv),0)
+q[i,]=c(rgs,rei,fv,pv,cf,dp)
+}
+npv[j]=sum(q[,4])-inst #net present value
+dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+par(mfrow= c(1,2))
+plot(q[,3], main = "Cash flow of incentive (50%)", ylab="$", xlab="year",
+type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("topright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.7)
+
+
+npv = c()
+dpp = c()
+com = 0.5
+for(j in 1:100){
+rgs=gas_c
+rei=u_cost
+cf=-inst * 6 * 0.2
+q=data.frame(matrix(NA,30,6))
+for(i in 1:30){
+rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+fv=(rgs*gas - kw*rei)
+pv= fv/(1+rt)^i
+old=cf
+cf=cf+pv
+dp=ifelse(cf>0,i-1+abs(old/pv),0)
+q[i,]=c(rgs,rei,fv,pv,cf,dp)
+}
+npv[j]=sum(q[,4])-inst #net present value
+dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+plot(q[,3], main = "Cash flow of incentive (80%)", ylab="$", xlab="year",
+type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("topright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.7)
+```
+
+
+For case 3, the results are very similar. Hence, both case 2 and case 3 would require an incentive to cover around 80% to receive a comparable DPP as single-family household or condo owners receive.
+
+```{r}
+npv = c()
+dpp = c()
+com=0.2
+for(j in 1:100){
+rgs=gas_c
+rei=u_cost
+cf=-inst *6*0.5
+q=data.frame(matrix(NA,30,6))
+for(i in 1:30){
+rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+fv=com*6*(rgs*gas - kw*rei)
+pv= fv/(1+rt)^i
+old=cf
+cf=cf+pv
+dp=ifelse(cf>0,i-1+abs(old/pv),0)
+q[i,]=c(rgs,rei,fv,pv,cf,dp)
+}
+npv[j]=sum(q[,4])-inst #net present value
+dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+par(mfrow= c(1,2))
+plot(q[,3], main = "Cash flow of incentive (50%)", ylab="$", xlab="year",
+type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("topright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.7)
+
+
+npv = c()
+dpp = c()
+com = 0.2
+for(j in 1:100){
+rgs=gas_c
+rei=u_cost
+cf=-inst * 6 * 0.2
+q=data.frame(matrix(NA,30,6))
+for(i in 1:30){
+rgs = rgs*(1+runif(1,0.07,0.1)) #annual gas price increase
+rei = rei*(1+runif(1,0.07,0.1)) #annual elec. price increase
+fv=com*6*(rgs*gas - kw*rei)
+pv= fv/(1+rt)^i
+old=cf
+cf=cf+pv
+dp=ifelse(cf>0,i-1+abs(old/pv),0)
+q[i,]=c(rgs,rei,fv,pv,cf,dp)
+}
+npv[j]=sum(q[,4])-inst #net present value
+dpp[j]=min(q[,6][q[,6]>0]) #discounted payback period
+}
+plot(q[,3], main = "Cash flow of incentive (80%)", ylab="$", xlab="year",
+type = 'l', ylim = c(min(q[,5]),max(q[,5])), col = 'red',lwd=3)
+lines(q[,4], type = 'l', col='blue',lwd=3)
+lines(q[,5], type = 'l', col='orange',lwd=3)
+legend("topright", legend=c("Annual FV","Annual PV","NPV"),col=c("red","blue","orange"), lty=1, box.lty = 0, lwd=7,cex=0.7)
+
+```
+
+
 To achieve the DPP of 5 years like the case 1, 1 owner single family, commission rate and incentive rate were estimated for each scenario: case 3, rental apartment (no owner living) and case 4, rental apartment (sharing chargers in addition to the case 3 above - 12 renters are sharing 6 installed chargers).
 
 ## Incentive comparison (case 3)
