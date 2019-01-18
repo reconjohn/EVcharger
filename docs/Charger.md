@@ -266,11 +266,11 @@ Since the case 3 assumes that every charger will be used by one tenant, assuming
 ![](Charger_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 ```
-## [1] 31237.94
+## [1] 31247.43
 ```
 
 ```
-## [1] 8.52487
+## [1] 8.516698
 ```
 
 ![](Charger_files/figure-html/unnamed-chunk-11-2.png)<!-- -->![](Charger_files/figure-html/unnamed-chunk-11-3.png)<!-- -->

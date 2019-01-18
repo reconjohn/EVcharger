@@ -3,12 +3,12 @@ title: "EV CHARGER INVESTMENT"
 author: "Yohan Min"
 date: "January 17, 2019"
 output:
-  pdf_document: null
-  fig_caption: yes
-  number_sections: yes
   html_document:
     df_print: paged
     keep_md: true
+  fig_caption: yes
+  number_sections: yes
+  pdf_document: null
   toc: yes
 header-includes:
 - \usepackage{float}
